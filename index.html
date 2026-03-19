@@ -133,6 +133,13 @@ tr:hover td{background:#FAFBFC}
 .checkbox-item input{width:16px;height:16px;cursor:pointer}
 .checkbox-item label{margin:0;font-size:13px;font-weight:500;color:var(--text);cursor:pointer}
 
+/* Toast Notifications */
+.toast{position:fixed;top:20px;right:20px;padding:12px 20px;border-radius:8px;font-size:13px;font-weight:600;z-index:300;opacity:0;transform:translateY(-10px);transition:all .3s;font-family:inherit;box-shadow:0 4px 12px rgba(0,0,0,.15)}
+.toast.show{opacity:1;transform:translateY(0)}
+.toast.success{background:#D1FAE5;color:#059669;border:1px solid #6EE7B7}
+.toast.error{background:#FEE2E2;color:#DC2626;border:1px solid #FCA5A5}
+.toast.info{background:#DBEAFE;color:#2563EB;border:1px solid #93C5FD}
+
 /* AI Assistant */
 .ai-btn{position:fixed;bottom:20px;right:20px;width:52px;height:52px;border-radius:50%;background:var(--teal);color:#fff;border:none;cursor:pointer;font-size:24px;box-shadow:0 4px 16px rgba(44,110,106,.4);z-index:200;transition:transform .2s}
 .ai-btn:hover{transform:scale(1.1)}
@@ -544,7 +551,7 @@ tr:hover td{background:#FAFBFC}
 
     <!-- SERVICES - ARRIVALS PAGE -->
     <div class="page" id="p-services-arrivals">
-      <div class="toolbar"><h2 style="font-size:18px;font-weight:700">Arrivals</h2></div>
+      <div class="toolbar"><h2 style="font-size:18px;font-weight:710">Arrivals</h2></div>
       <div style="display:flex;gap:8px;margin-bottom:16px">
         <select class="filter-select"><option>All Locations</option><option>HOYHON CIRCUS</option><option>HOYHON Park - Silom</option></select>
         <select class="filter-select"><option>Today</option><option>This Week</option><option>This Month</option></select>
@@ -653,13 +660,13 @@ tr:hover td{background:#FAFBFC}
       <option>Aerials 101</option>
     </select>
     <label>Date</label>
-    <input type="date">
+    <input type="date" id="classDate">
     <label>Start Time</label>
-    <input type="time">
+    <input type="time" id="classStartTime">
     <label>End Time</label>
-    <input type="time">
+    <input type="time" id="classEndTime">
     <label>Instructor</label>
-    <select>
+    <select id="classInstructor">
       <option>Joh</option>
       <option>Nassanun</option>
       <option>Atom</option>
@@ -673,7 +680,7 @@ tr:hover td{background:#FAFBFC}
       <option>Mint</option>
     </select>
     <label>Room</label>
-    <select>
+    <select id="classRoom">
       <option>Wall Bar 1</option>
       <option>Pilates Room</option>
       <option>GYM 1 Sling Motor</option>
@@ -684,7 +691,7 @@ tr:hover td{background:#FAFBFC}
       <option>Yoga Studio</option>
     </select>
     <label>Capacity</label>
-    <input type="number" min="1" value="10">
+    <input type="number" id="classCapacity" min="1" value="10">
     <div class="modal-footer">
       <button class="btn" onclick="closeAddClassModal()">Cancel</button>
       <button class="btn btn-p" onclick="saveClass()">Save</button>
@@ -744,11 +751,24 @@ tr:hover td{background:#FAFBFC}
 </div>
 
 <script>
+// ===== TOAST NOTIFICATION SYSTEM =====
+function showToast(msg, type) {
+  var t = document.createElement('div');
+  t.className = 'toast ' + (type || 'success');
+  t.textContent = msg;
+  document.body.appendChild(t);
+  setTimeout(function() { t.classList.add('show'); }, 10);
+  setTimeout(function() {
+    t.classList.remove('show');
+    setTimeout(function() { t.remove(); }, 300);
+  }, 3000);
+}
+
 // ===== SUPABASE CONNECTION =====
 var SB_URL = 'https://ranfrjmynukmolprvrgn.supabase.co';
 var SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJhbmZyam15bnVrbW9scHJ2cmduIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM4NDU0MTIsImV4cCI6MjA4OTQyMTQxMn0.WPO7tIHERlkDx97mzzMO4B-f12UmvwhqGerDEwVfwWM';
 var sb = null;
-var dbMode = false; // true = use Supabase, false = use mock data
+var dbMode = false;
 
 try {
   if (window.supabase) {
@@ -764,7 +784,7 @@ async function dbLoadClasses() {
   try {
     var { data } = await sb.from('classes').select('*, class_type:class_types(name, color, category), location:locations(name), room:rooms(name)').eq('is_visible', true).order('date').order('start_time');
     return data;
-  } catch(e) { return null; }
+  } catch(e) { console.error('Error loading classes:', e); return null; }
 }
 
 async function dbLoadClients() {
@@ -772,7 +792,7 @@ async function dbLoadClients() {
   try {
     var { data } = await sb.from('profiles').select('*').order('created_at', {ascending:false});
     return data;
-  } catch(e) { return null; }
+  } catch(e) { console.error('Error loading clients:', e); return null; }
 }
 
 async function dbLoadClassTypes() {
@@ -780,7 +800,7 @@ async function dbLoadClassTypes() {
   try {
     var { data } = await sb.from('class_types').select('*').eq('is_active', true).order('name');
     return data;
-  } catch(e) { return null; }
+  } catch(e) { console.error('Error loading class types:', e); return null; }
 }
 
 async function dbLoadPackages() {
@@ -788,7 +808,7 @@ async function dbLoadPackages() {
   try {
     var { data } = await sb.from('packages').select('*').eq('is_active', true).order('price');
     return data;
-  } catch(e) { return null; }
+  } catch(e) { console.error('Error loading packages:', e); return null; }
 }
 
 async function dbLoadLocations() {
@@ -796,7 +816,7 @@ async function dbLoadLocations() {
   try {
     var { data } = await sb.from('locations').select('*').eq('is_active', true);
     return data;
-  } catch(e) { return null; }
+  } catch(e) { console.error('Error loading locations:', e); return null; }
 }
 
 async function dbLoadRooms() {
@@ -804,31 +824,54 @@ async function dbLoadRooms() {
   try {
     var { data } = await sb.from('rooms').select('*').eq('is_active', true);
     return data;
-  } catch(e) { return null; }
+  } catch(e) { console.error('Error loading rooms:', e); return null; }
 }
 
 async function dbAddClass(classData) {
   if (!dbMode) return null;
   try {
-    var { data } = await sb.from('classes').insert(classData).select().single();
+    var { data, error } = await sb.from('classes').insert(classData).select().single();
+    if (error) throw error;
     return data;
-  } catch(e) { return null; }
+  } catch(e) { console.error('Error adding class:', e); return null; }
 }
 
 async function dbAddClient(clientData) {
   if (!dbMode) return null;
   try {
-    var { data } = await sb.from('profiles').insert({...clientData, id: crypto.randomUUID(), role:'member'}).select().single();
+    var newClient = {
+      id: crypto.randomUUID(),
+      full_name: clientData.n,
+      email: clientData.e,
+      phone: clientData.ph,
+      line_id: clientData.line_id || null,
+      package_id: clientData.pk === '—' ? null : clientData.pk,
+      tags: clientData.tg,
+      notes: clientData.notes || null,
+      role: 'member'
+    };
+    var { data, error } = await sb.from('profiles').insert(newClient).select().single();
+    if (error) throw error;
     return data;
-  } catch(e) { return null; }
+  } catch(e) { console.error('Error adding client:', e); return null; }
 }
 
 async function dbCheckIn(bookingId) {
   if (!dbMode) return false;
   try {
-    await sb.from('bookings').update({status:'checked_in', checked_in_at: new Date().toISOString()}).eq('id', bookingId);
+    var { error } = await sb.from('bookings').update({status:'checked_in', checked_in_at: new Date().toISOString()}).eq('id', bookingId);
+    if (error) throw error;
     return true;
-  } catch(e) { return false; }
+  } catch(e) { console.error('Error checking in:', e); return false; }
+}
+
+async function dbSearchClients(q) {
+  if (!dbMode) return null;
+  try {
+    var { data, error } = await sb.from('profiles').select('*').or('full_name.ilike.%'+q+'%,email.ilike.%'+q+'%').limit(5);
+    if (error) throw error;
+    return data;
+  } catch(e) { console.error('Error searching clients:', e); return null; }
 }
 
 // ===== CONNECTION STATUS INDICATOR =====
@@ -849,10 +892,9 @@ async function initData() {
 
     if (realClassTypes && realClassTypes.length > 0) {
       console.log('📊 Loaded', realClassTypes.length, 'class types from Supabase');
-      // Update service classes table
       var h='';
       realClassTypes.forEach(function(s){
-        h+='<tr><td style="font-weight:600">'+s.name+'</td><td>'+( s.category||'—')+'</td><td>'+(s.duration_minutes||60)+' min</td><td>'+(s.default_capacity||10)+'</td><td><span class="bd b-open">'+(s.level||'all')+'</span></td></tr>';
+        h+='<tr><td style="font-weight:600">'+s.name+'</td><td>'+(s.category||'—')+'</td><td>'+(s.duration_minutes||60)+' min</td><td>'+(s.default_capacity||10)+'</td><td><span class="bd b-open">'+(s.level||'all')+'</span></td></tr>';
       });
       if (document.getElementById('scB')) document.getElementById('scB').innerHTML = h;
     }
@@ -874,7 +916,6 @@ async function initData() {
   showDbStatus();
 }
 
-// Run on page load
 setTimeout(initData, 500);
 
 // DATA
@@ -944,7 +985,7 @@ function renderClassesTable(){
     h+='<td>—</td>';
     h+='<td>'+s.r.split('(')[0].trim()+'</td>';
     h+='<td>'+s.r+'</td>';
-    h+='<td style="text-align:center"><button class="btn btn-s" onclick="alert(\'Edit class options\')">⋮</button></td>';
+    h+='<td style="text-align:center"><button class="btn btn-s" onclick="showToast(\'Edit class options\', \'info\')">⋮</button></td>';
     h+='</tr>';
   });
   document.getElementById('classesBody').innerHTML=h;
@@ -967,7 +1008,14 @@ function fC(){var q=document.getElementById('cS').value.toLowerCase();rC(q?CL.fi
 // CHECK IN
 function rCI(){var h='';CI.forEach(function(c,i){h+='<div class="cir'+(c.dn?' dn':'')+'"><div class="cr"><div class="ca" style="'+(c.dn?'background:var(--green-bg);color:var(--green)':'')+'">'+( c.dn?'✓':ini(c.n))+'</div><div><div style="font-weight:600;font-size:13px">'+c.n+'</div><div style="font-size:12px;color:var(--muted)">'+c.pk+'</div></div></div>';if(c.dn){h+='<span class="cb">✓ '+c.tm+'</span>'}else{h+='<div style="display:flex;gap:6px"><button class="bc" onclick="dCI('+i+')">Check In</button><button class="bx">✕</button></div>'}h+='</div>'});document.getElementById('ciK').innerHTML=h;document.getElementById('ciC').textContent=CI.filter(function(c){return c.dn}).length}
 rCI();
-function dCI(i){var now=new Date();CI[i].dn=true;CI[i].tm=('0'+now.getHours()).slice(-2)+':'+('0'+now.getMinutes()).slice(-2);rCI()}
+
+function dCI(i){
+  var now=new Date();
+  CI[i].dn=true;
+  CI[i].tm=('0'+now.getHours()).slice(-2)+':'+('0'+now.getMinutes()).slice(-2);
+  rCI();
+  showToast(CI[i].n + ' checked in successfully!', 'success');
+}
 
 // PRICING
 h='';PK.forEach(function(p){h+='<div class="pc"><div class="pn">'+p.n+'</div><div class="pp">'+p.p+'</div><div class="bd '+(p.tp==='Unlimited'?'b-vip':'b-new')+'" style="margin-bottom:8px">'+p.tp+'</div><div class="pd">'+p.d+'</div></div>'});
@@ -982,10 +1030,11 @@ h='';STAFF.forEach(function(s){h+='<tr><td><div class="cr"><div class="ca">'+ini
 document.getElementById('stB').innerHTML=h;
 
 // GLOBAL SEARCH
-function handleClientSearch(){
+async function handleClientSearch(){
   var q=document.getElementById('topSearch').value.toLowerCase();
   var results=document.getElementById('searchResults');
   if(!q){results.classList.remove('show');return}
+
   var matches=CL.filter(function(c){return c.n.toLowerCase().indexOf(q)>=0||c.e.toLowerCase().indexOf(q)>=0});
   var h='';
   matches.slice(0,5).forEach(function(c){
@@ -994,6 +1043,7 @@ function handleClientSearch(){
   results.innerHTML=h||'<div class="search-result-item" style="cursor:default">No results</div>';
   results.classList.add('show');
 }
+
 function goToClientsPage(name){goToPage('clients');document.getElementById('cS').value=name;fC();document.getElementById('searchResults').classList.remove('show')}
 
 // ===== AI ASSISTANT =====
@@ -1050,45 +1100,124 @@ document.getElementById('aiInp').addEventListener('keydown',function(e){if(e.key
 // MODALS
 function openAddClassModal(){document.getElementById('addClassModal').classList.add('show')}
 function closeAddClassModal(){document.getElementById('addClassModal').classList.remove('show')}
-function saveClass(){alert('Class saved!');closeAddClassModal()}
+
+async function saveClass(){
+  var classType = document.getElementById('classTypeSelect').value;
+  var classDate = document.getElementById('classDate').value;
+  var startTime = document.getElementById('classStartTime').value;
+  var endTime = document.getElementById('classEndTime').value;
+  var instructor = document.getElementById('classInstructor').value;
+  var room = document.getElementById('classRoom').value;
+  var capacity = parseInt(document.getElementById('classCapacity').value);
+
+  if(!classType || !classDate || !startTime || !endTime || !instructor || !room){
+    showToast('Please fill in all required fields', 'error');
+    return;
+  }
+
+  var classData = {
+    class_type_id: classType,
+    date: classDate,
+    start_time: startTime,
+    end_time: endTime,
+    instructor_name: instructor,
+    room_name: room,
+    capacity: capacity,
+    is_visible: true
+  };
+
+  if(dbMode){
+    var result = await dbAddClass(classData);
+    if(result){
+      showToast('Class added successfully!', 'success');
+      closeAddClassModal();
+      document.getElementById('classDate').value = '';
+      document.getElementById('classStartTime').value = '';
+      document.getElementById('classEndTime').value = '';
+      document.getElementById('classCapacity').value = '10';
+    } else {
+      showToast('Error adding class. Please try again.', 'error');
+    }
+  } else {
+    showToast('Class saved! (Demo mode)', 'success');
+    closeAddClassModal();
+  }
+}
 
 function openAddClientModal(){document.getElementById('addClientModal').classList.add('show')}
 function closeAddClientModal(){document.getElementById('addClientModal').classList.remove('show')}
-function saveClient(){
+
+async function saveClient(){
   var name=document.getElementById('clientName').value;
-  if(!name){alert('Please enter name');return}
+  if(!name){
+    showToast('Please enter a name', 'error');
+    return;
+  }
+
   var tags=[];
   if(document.getElementById('tag-vip').checked)tags.push('VIP');
   if(document.getElementById('tag-new').checked)tags.push('New');
   if(document.getElementById('tag-lead').checked)tags.push('Lead');
   if(document.getElementById('tag-regular').checked)tags.push('Regular');
   if(tags.length===0)tags.push('Regular');
-  var newClient={
-    n:name,
-    e:document.getElementById('clientEmail').value||'—',
-    ph:document.getElementById('clientPhone').value||'—',
-    pk:document.getElementById('clientPackage').value,
-    v:0,
-    tg:tags,
-    l:'—'
+
+  var email = document.getElementById('clientEmail').value || '—';
+  var phone = document.getElementById('clientPhone').value || '—';
+  var lineId = document.getElementById('clientLineID').value || null;
+  var pkg = document.getElementById('clientPackage').value;
+  var notes = document.getElementById('clientNotes').value || null;
+
+  var newClientData = {
+    n: name,
+    e: email,
+    ph: phone,
+    line_id: lineId,
+    pk: pkg,
+    tg: tags,
+    notes: notes,
+    v: 0,
+    l: '—'
   };
-  CL.push(newClient);
-  rC(CL);
-  alert('Client added successfully!');
-  closeAddClientModal();
-  document.getElementById('clientName').value='';
-  document.getElementById('clientEmail').value='';
-  document.getElementById('clientPhone').value='';
-  document.getElementById('clientLineID').value='';
-  document.getElementById('tag-vip').checked=false;
-  document.getElementById('tag-new').checked=false;
-  document.getElementById('tag-lead').checked=false;
-  document.getElementById('tag-regular').checked=false;
-  document.getElementById('clientPackage').value='—';
-  document.getElementById('clientNotes').value='';
+
+  if(dbMode){
+    var result = await dbAddClient(newClientData);
+    if(result){
+      showToast('Client added successfully!', 'success');
+      CL.push(newClientData);
+      rC(CL);
+      closeAddClientModal();
+      document.getElementById('clientName').value='';
+      document.getElementById('clientEmail').value='';
+      document.getElementById('clientPhone').value='';
+      document.getElementById('clientLineID').value='';
+      document.getElementById('tag-vip').checked=false;
+      document.getElementById('tag-new').checked=false;
+      document.getElementById('tag-lead').checked=false;
+      document.getElementById('tag-regular').checked=false;
+      document.getElementById('clientPackage').value='—';
+      document.getElementById('clientNotes').value='';
+    } else {
+      showToast('Error adding client. Please try again.', 'error');
+    }
+  } else {
+    CL.push(newClientData);
+    rC(CL);
+    showToast('Client added! (Demo mode)', 'success');
+    closeAddClientModal();
+    document.getElementById('clientName').value='';
+    document.getElementById('clientEmail').value='';
+    document.getElementById('clientPhone').value='';
+    document.getElementById('clientLineID').value='';
+    document.getElementById('tag-vip').checked=false;
+    document.getElementById('tag-new').checked=false;
+    document.getElementById('tag-lead').checked=false;
+    document.getElementById('tag-regular').checked=false;
+    document.getElementById('clientPackage').value='—';
+    document.getElementById('clientNotes').value='';
+  }
 }
 
-function toggleDashboardCollapse(){alert('Dashboard collapsed')}
+function toggleDashboardCollapse(){showToast('Dashboard collapsed', 'info')}
 
 // Close modals on background click
 document.getElementById('addClassModal').onclick=function(e){if(e.target===this)closeAddClassModal()}
