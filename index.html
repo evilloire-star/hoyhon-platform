@@ -1,0 +1,1117 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HOYHON Platform</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+:root {
+  --white:#FFF;--bg:#F5F6F8;--surface:#FFF;--border:#E5E7EB;--border-l:#F0F0F0;
+  --text:#1A1A2E;--text2:#374151;--muted:#6B7280;
+  --teal:#2C6E6A;--teal-l:#E0F2F1;--teal-d:#1B4D4A;
+  --green:#10B981;--green-bg:#D1FAE5;--yellow:#F59E0B;--yellow-bg:#FEF3C7;
+  --red:#EF4444;--red-bg:#FEE2E2;--blue:#3B82F6;--blue-bg:#DBEAFE;
+  --purple:#8B5CF6;--purple-bg:#EDE9FE;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);display:flex;height:100vh;overflow:hidden}
+.sidebar{width:220px;background:var(--white);border-right:1px solid var(--border);display:flex;flex-direction:column;flex-shrink:0;overflow-y:auto}
+.sidebar-logo{padding:20px 16px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--border)}
+.logo-icon{width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:18px;color:#fff;background:linear-gradient(135deg,var(--teal),var(--teal-d))}
+.sidebar-logo span{font-weight:700;font-size:15px}
+.sidebar nav{flex:1;padding:12px 8px;overflow-y:auto}
+.nav-item{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;font-size:14px;font-weight:500;color:var(--muted);cursor:pointer;transition:all .15s;margin-bottom:2px}
+.nav-item:hover{background:var(--bg);color:var(--text)}
+.nav-item.active{background:var(--teal-l);color:var(--teal);font-weight:600}
+.nav-item.has-sub::after{content:'›';margin-left:auto;font-size:16px;transition:transform .2s}
+.nav-item.has-sub.open::after{transform:rotate(90deg)}
+.nav-item .ic{width:20px;text-align:center;font-size:16px}
+.nav-sub{display:none;margin-left:12px;padding-left:8px;border-left:2px solid var(--border)}
+.nav-sub.show{display:block}
+.nav-sub .nav-item{font-size:13px;padding-left:8px;margin-bottom:1px;color:var(--muted)}
+.nav-sec{font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;padding:16px 12px 6px}
+.sidebar-footer{padding:12px 8px;border-top:1px solid var(--border);font-size:12px}
+.sidebar-footer .nav-item{margin-bottom:0;padding:8px 12px}
+.main{flex:1;display:flex;flex-direction:column;overflow:hidden}
+.topbar{height:56px;background:var(--white);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 24px;flex-shrink:0;gap:16px}
+.topbar-left{display:flex;align-items:center;gap:12px}
+.topbar-left .menu-btn{background:none;border:none;font-size:20px;cursor:pointer;color:var(--text)}
+.topbar-center{flex:1;display:flex;align-items:center;justify-content:center}
+.search{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:8px 16px;font-size:13px;width:280px;outline:none;color:var(--text);font-family:inherit}
+.search:focus{border-color:var(--teal);background:var(--white)}
+.search-results{position:absolute;top:56px;background:var(--white);border:1px solid var(--border);border-radius:8px;width:280px;max-height:300px;overflow-y:auto;display:none;z-index:50}
+.search-results.show{display:block}
+.search-result-item{padding:10px 16px;border-bottom:1px solid var(--border-l);cursor:pointer;transition:background .15s}
+.search-result-item:hover{background:var(--bg)}
+.topbar-right{display:flex;align-items:center;gap:16px}
+.icon-btn{background:none;border:none;font-size:18px;cursor:pointer;color:var(--text);transition:opacity .15s}
+.icon-btn:hover{opacity:.6}
+.avatar-btn{display:flex;align-items:center;gap:8px;background:none;border:1px solid var(--border);border-radius:8px;padding:6px 10px;cursor:pointer;font-size:13px;font-weight:600;transition:all .15s;font-family:inherit}
+.avatar-btn:hover{background:var(--bg)}
+.avatar{width:32px;height:32px;border-radius:50%;background:var(--teal);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px}
+.content{flex:1;overflow-y:auto;padding:24px}
+.kpi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:24px}
+.kpi-card{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:20px}
+.kpi-card .lb{font-size:13px;color:var(--muted);margin-bottom:4px}
+.kpi-card .vl{font-size:28px;font-weight:700}
+.kpi-card .ch{font-size:12px;font-weight:600;margin-top:4px;color:var(--green)}
+.card{background:var(--white);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:16px}
+.card-h{padding:16px 20px;border-bottom:1px solid var(--border-l);display:flex;align-items:center;justify-content:space-between}
+.card-h h2{font-size:16px;font-weight:700}
+.card-collapse{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--muted);cursor:pointer;background:none;border:none;font-family:inherit}
+.card-collapse:hover{color:var(--text)}
+.insights-banner{background:linear-gradient(135deg,#A7F3D0 0%,#6EE7B7 100%);border:1px solid #6EE7B7;border-radius:12px;padding:16px 20px;display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.insights-banner h3{color:#047857;font-size:14px;font-weight:700}
+.insights-banner .btn{background:none;border:none;color:#047857;cursor:pointer;font-size:12px;font-weight:600;font-family:inherit}
+.insights-banner .btn:hover{text-decoration:underline}
+.filter-row{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap}
+.filter-select{padding:8px 12px;border:1px solid var(--border);border-radius:8px;font-size:12px;background:var(--white);font-family:inherit;cursor:pointer}
+.tabs-row{display:flex;gap:8px;margin-bottom:16px;border-bottom:1px solid var(--border)}
+.tab-btn{padding:10px 16px;background:none;border:none;cursor:pointer;font-size:13px;font-weight:600;color:var(--muted);border-bottom:2px solid transparent;transition:all .15s;font-family:inherit}
+.tab-btn.active{color:var(--teal);border-bottom-color:var(--teal)}
+.tab-btn:hover{color:var(--text)}
+.notifications-panel{background:var(--white);border:1px solid var(--border);border-radius:12px;max-height:400px;overflow-y:auto}
+.notif-card{padding:12px 16px;border-bottom:1px solid var(--border-l);cursor:pointer;transition:background .15s}
+.notif-card:hover{background:var(--bg)}
+.notif-card .notif-title{font-size:13px;font-weight:600;color:var(--text)}
+.notif-card .notif-desc{font-size:12px;color:var(--muted);margin-top:4px}
+table{width:100%;border-collapse:collapse}
+th{text-align:left;padding:10px 16px;font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.3px;border-bottom:1px solid var(--border);background:var(--bg)}
+td{padding:12px 16px;font-size:13px;color:var(--text2);border-bottom:1px solid var(--border-l)}
+tr:hover td{background:#FAFBFC}
+.pw{display:flex;align-items:center;gap:8px}
+.pb{width:80px;height:6px;background:var(--border);border-radius:3px;overflow:hidden}
+.pf{height:100%;border-radius:3px}
+.pt{font-size:12px;font-weight:600;color:var(--muted);min-width:35px}
+.bd{display:inline-block;padding:2px 8px;border-radius:6px;font-size:11px;font-weight:600}
+.b-open{background:var(--green-bg);color:var(--green)}.b-alm{background:var(--yellow-bg);color:var(--yellow)}.b-full{background:var(--red-bg);color:var(--red)}
+.b-vip{background:var(--purple-bg);color:var(--purple)}.b-risk{background:var(--red-bg);color:var(--red)}.b-new{background:var(--green-bg);color:var(--green)}.b-lead{background:var(--blue-bg);color:var(--blue)}.b-reg{background:var(--bg);color:var(--muted)}
+.toolbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:8px}
+.btn{padding:8px 16px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;border:1px solid var(--border);background:var(--white);color:var(--text);transition:all .15s;font-family:inherit}
+.btn:hover{background:var(--bg)}.btn-p{background:var(--teal);color:#fff;border-color:var(--teal)}.btn-p:hover{background:var(--teal-d)}
+.btn-s{padding:6px 12px;font-size:12px}.btn-a{background:var(--teal-l);color:var(--teal);border-color:var(--teal)}
+.wg{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;margin-bottom:16px}
+.dh{text-align:center;padding:8px 4px;font-size:12px;color:var(--muted);font-weight:600;margin-bottom:4px}
+.dh .dt{font-size:18px;font-weight:700;color:var(--text);display:block;margin-top:2px}
+.dh.tod{background:var(--teal-l);border-radius:8px}.dh.tod .dt{color:var(--teal)}
+.cc{background:var(--white);border:1px solid var(--border);border-radius:8px;padding:8px 10px;margin-bottom:6px;cursor:pointer;transition:box-shadow .15s;border-left:3px solid #ccc}
+.cc:hover{box-shadow:0 2px 8px rgba(0,0,0,.08)}
+.cc .ct{font-size:11px;color:var(--muted)}.cc .cn{font-size:12px;font-weight:600;margin:2px 0;line-height:1.3}.cc .ci{font-size:11px;color:var(--muted)}
+.cc .cp{display:flex;align-items:center;gap:4px;margin-top:4px}
+.cc .mb{flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden}.cc .mf{height:100%;border-radius:2px}
+.ca{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;background:var(--teal-l);color:var(--teal);flex-shrink:0}
+.cr{display:flex;align-items:center;gap:10px}.tags{display:flex;gap:4px;flex-wrap:wrap}
+.cih{background:var(--teal-l);border:1px solid #B2DFDB;border-radius:12px;padding:20px 24px;margin-bottom:20px;display:flex;align-items:center;justify-content:space-between}
+.cih h2{color:var(--teal-d);font-size:18px}.cih p{color:var(--teal);font-size:13px;margin-top:2px}
+.cis{display:flex;gap:24px}.cis div{text-align:center}.cis .n{font-size:28px;font-weight:700}.cis .l{font-size:11px;color:var(--muted)}
+.cir{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:1px solid var(--border-l);transition:background .15s}
+.cir:hover{background:#FAFBFC}.cir.dn{background:#F0FDF4}
+.bc{background:var(--green);color:#fff;border:none;padding:6px 14px;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit}
+.bc:hover{background:#059669}.bx{background:var(--white);color:var(--red);border:1px solid var(--red-bg);padding:6px 10px;border-radius:6px;font-size:12px;cursor:pointer;font-family:inherit}
+.cb{background:var(--green-bg);color:var(--green);padding:4px 10px;border-radius:6px;font-size:12px;font-weight:600}
+.pg{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.pc{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:24px;text-align:center;transition:box-shadow .15s}
+.pc:hover{box-shadow:0 4px 12px rgba(0,0,0,.06)}
+.pc .pn{font-size:16px;font-weight:700}.pc .pp{font-size:24px;font-weight:700;color:var(--teal);margin:8px 0}.pc .pd{font-size:12px;color:var(--muted)}
+.rg{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.rc{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:16px;text-align:center}
+.rc .rn{font-weight:700;font-size:14px;margin-bottom:6px}.rc .rl{font-size:12px;color:var(--muted)}.rc .rs{display:inline-block;padding:4px 8px;border-radius:6px;font-size:11px;margin-top:6px;background:var(--green-bg);color:var(--green)}
+.dg{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.dc{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:20px;cursor:pointer;transition:all .2s}
+.dc:hover{box-shadow:0 4px 12px rgba(0,0,0,.08);transform:translateY(-2px)}
+.dc .di{font-size:28px;margin-bottom:8px}.dc .dn{font-weight:700;font-size:14px;margin-bottom:3px}.dc .dd{font-size:12px;color:var(--muted)}.dc .badge{display:inline-block;background:var(--yellow-bg);color:var(--yellow);padding:2px 6px;border-radius:4px;font-size:10px;font-weight:600;margin-top:6px}
+.st{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.sg{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:16px}
+.sg h3{font-size:14px;font-weight:700;margin-bottom:12px}
+.sg label{display:block;font-size:12px;color:var(--muted);margin-bottom:4px;font-weight:600;text-transform:uppercase;letter-spacing:.3px}
+.sg input,.sg select,.sg textarea{width:100%;padding:8px 12px;border:1px solid var(--border);border-radius:8px;font-size:13px;margin-bottom:12px;font-family:inherit}
+.sg textarea{resize:vertical;min-height:80px}
+.checkbox-group{display:flex;flex-direction:column;gap:8px;margin-bottom:12px}
+.checkbox-item{display:flex;align-items:center;gap:8px}
+.checkbox-item input{width:16px;height:16px;cursor:pointer}
+.checkbox-item label{margin:0;font-size:13px;font-weight:500;color:var(--text);cursor:pointer}
+
+/* AI Assistant */
+.ai-btn{position:fixed;bottom:20px;right:20px;width:52px;height:52px;border-radius:50%;background:var(--teal);color:#fff;border:none;cursor:pointer;font-size:24px;box-shadow:0 4px 16px rgba(44,110,106,.4);z-index:200;transition:transform .2s}
+.ai-btn:hover{transform:scale(1.1)}
+.ai-panel{position:fixed;bottom:80px;right:20px;width:380px;max-height:520px;background:var(--white);border:1px solid var(--border);border-radius:16px;box-shadow:0 8px 32px rgba(0,0,0,.15);z-index:200;display:none;flex-direction:column;overflow:hidden}
+.ai-panel.show{display:flex}
+.ai-head{padding:14px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;background:var(--teal);color:#fff;border-radius:16px 16px 0 0}
+.ai-head h3{font-size:14px;font-weight:700}.ai-close{background:none;border:none;color:#fff;font-size:20px;cursor:pointer}
+.ai-body{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:10px;max-height:360px}
+.ai-msg{padding:10px 14px;border-radius:12px;font-size:13px;line-height:1.6;max-width:90%}
+.ai-msg.bot{background:var(--teal-l);color:var(--text);align-self:flex-start;border-bottom-left-radius:4px}
+.ai-msg.user{background:var(--teal);color:#fff;align-self:flex-end;border-bottom-right-radius:4px}
+.ai-msg.typing{background:var(--teal-l);color:var(--text);align-self:flex-start;display:flex;gap:4px;align-items:center}
+.ai-typing-dot{width:6px;height:6px;border-radius:50%;background:var(--teal);animation:typingAnimation .6s infinite}
+.ai-typing-dot:nth-child(2){animation-delay:.2s}.ai-typing-dot:nth-child(3){animation-delay:.4s}
+@keyframes typingAnimation{0%,60%{opacity:.5}100%{opacity:1}}
+.ai-input{display:flex;gap:8px;padding:12px;border-top:1px solid var(--border)}
+.ai-input input{flex:1;padding:8px 14px;border:1px solid var(--border);border-radius:8px;font-size:13px;outline:none;font-family:inherit}
+.ai-input input:focus{border-color:var(--teal)}
+.ai-input button{padding:8px 14px;background:var(--teal);color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit}
+.ai-quick{display:flex;flex-wrap:wrap;gap:6px;padding:0 14px 10px}
+.ai-quick button{background:var(--bg);border:1px solid var(--border);border-radius:16px;padding:4px 12px;font-size:11px;color:var(--teal);cursor:pointer;font-family:inherit;transition:all .15s}
+.ai-quick button:hover{background:var(--teal-l);border-color:var(--teal)}
+
+.page{display:none}.page.active{display:block}
+.modal-bg{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.5);z-index:100;justify-content:center;align-items:center}
+.modal-bg.show{display:flex}
+.modal{background:var(--white);border-radius:12px;padding:24px;width:90%;max-width:500px;box-shadow:0 10px 40px rgba(0,0,0,.2)}
+.modal h2{font-size:18px;font-weight:700;margin-bottom:16px}
+.modal .close-btn{float:right;background:none;border:none;font-size:24px;cursor:pointer;color:var(--muted)}
+.modal-footer{display:flex;gap:12px;justify-content:flex-end;margin-top:20px}
+.modal-footer .btn{flex:1}
+</style>
+</head>
+<body>
+
+<div class="sidebar">
+  <div class="sidebar-logo"><div class="logo-icon">H</div><span>HOYHON</span></div>
+  <nav id="nav">
+    <!-- MAIN SECTION -->
+    <div class="nav-sec">Main</div>
+    <div class="nav-item active" data-page="dashboard"><span class="ic">📊</span> Dashboard</div>
+    <div class="nav-item" data-page="classes"><span class="ic">📅</span> Classes</div>
+    <div class="nav-item" data-page="appointments"><span class="ic">📋</span> Appointments</div>
+    <div class="nav-item" data-page="courses"><span class="ic">📚</span> Courses</div>
+    <div class="nav-item" data-page="rooms"><span class="ic">🏠</span> Rooms</div>
+    <div class="nav-item" data-page="checkin"><span class="ic">✅</span> Check In</div>
+
+    <!-- MEMBERS SECTION -->
+    <div class="nav-sec">Members</div>
+    <div class="nav-item" data-page="clients"><span class="ic">👥</span> Clients</div>
+    <div class="nav-item" data-page="pos"><span class="ic">🛒</span> Point of Sale</div>
+
+    <!-- INSIGHTS SECTION -->
+    <div class="nav-sec">Insights</div>
+    <div class="nav-item has-sub" onclick="toggleSub(event, 'insights-sub')"><span class="ic">📈</span> Insights</div>
+    <div class="nav-sub" id="insights-sub">
+      <div class="nav-item" data-page="insights-reports"><span class="ic">📋</span> Reports</div>
+      <div class="nav-item" data-page="insights-analytics"><span class="ic">📊</span> Analytics</div>
+    </div>
+    <div class="nav-item" data-page="marketing"><span class="ic">📣</span> Marketing</div>
+
+    <!-- MANAGE SECTION -->
+    <div class="nav-sec">Manage</div>
+    <div class="nav-item has-sub" onclick="toggleSub(event, 'services-sub')"><span class="ic">🎯</span> Services & Products</div>
+    <div class="nav-sub" id="services-sub">
+      <div class="nav-item" data-page="services-classes"><span class="ic">📅</span> Classes</div>
+      <div class="nav-item" data-page="services-appointments"><span class="ic">📋</span> Appointments</div>
+      <div class="nav-item" data-page="services-courses"><span class="ic">📚</span> Courses</div>
+      <div class="nav-item" data-page="services-retail"><span class="ic">🛍️</span> Retail Products</div>
+      <div class="nav-item" data-page="services-pricing"><span class="ic">💰</span> Pricing</div>
+      <div class="nav-item" data-page="services-arrivals"><span class="ic">📥</span> Arrivals</div>
+      <div class="nav-item" data-page="services-contracts"><span class="ic">📄</span> Contracts</div>
+    </div>
+    <div class="nav-item" data-page="staff"><span class="ic">👤</span> Staff</div>
+    <div class="nav-item" data-page="settings"><span class="ic">⚙️</span> Settings</div>
+  </nav>
+  <div class="sidebar-footer">
+    <div id="dbStatus" style="padding:8px 12px"></div>
+    <div class="nav-item" data-page="settings"><span class="ic">✏️</span> Edit</div>
+  </div>
+</div>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-left">
+      <button class="menu-btn" onclick="toggleMenu()">☰</button>
+      <div class="logo-icon" style="width:32px;height:32px;font-size:16px">H</div>
+    </div>
+    <div class="topbar-center">
+      <div style="position:relative;width:100%;max-width:280px">
+        <input class="search" id="topSearch" placeholder="Find a client" oninput="handleClientSearch()">
+        <div class="search-results" id="searchResults"></div>
+      </div>
+    </div>
+    <div class="topbar-right">
+      <button class="icon-btn" title="Clock">🕐</button>
+      <button class="icon-btn" title="Checkmark">✓</button>
+      <button class="icon-btn" title="Calendar">📅</button>
+      <button class="icon-btn" title="Help">❓</button>
+      <button class="icon-btn" title="Share">📤</button>
+      <button class="avatar-btn">
+        <div class="avatar">HC</div>
+        <span>▼</span>
+      </button>
+    </div>
+  </div>
+  <div class="content">
+
+    <!-- DASHBOARD PAGE -->
+    <div class="page active" id="p-dashboard">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+        <div><h2 style="font-size:22px;font-weight:700">Welcome, HOYHON!</h2></div>
+        <button class="card-collapse" onclick="toggleDashboardCollapse()">Collapse ▲</button>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
+        <span style="font-size:13px;color:var(--muted)">Insights snapshot · </span>
+        <select class="filter-select" id="dateFilter"><option>This month to yesterday</option><option>Last 7 days</option><option>Last 30 days</option></select>
+        <select class="filter-select"><option>All Locations</option><option>HOYHON CIRCUS</option><option>HOYHON Park - Silom</option></select>
+      </div>
+      <div class="tabs-row">
+        <button class="tab-btn active">At Redemption</button>
+        <button class="tab-btn">At Time of Sale</button>
+      </div>
+      <div class="kpi-grid">
+        <div class="kpi-card"><div class="lb">Total Net Sales (BHT)</div><div class="vl">414,573</div><div class="ch">↑ 49.0% vs Prev Year</div></div>
+        <div class="kpi-card"><div class="lb">Total Visits</div><div class="vl">730</div><div class="ch">↑ 57.3% vs Prev Year</div></div>
+        <div class="kpi-card"><div class="lb">Active Members</div><div class="vl">156</div><div class="ch">↑ 1.3% Mar 17 vs Mar 16</div></div>
+      </div>
+      <div class="insights-banner">
+        <div><h3>Get business insights</h3></div>
+        <button class="btn" style="background:none;padding:0;font-size:12px;color:#047857;text-decoration:underline;cursor:pointer;font-weight:600" onclick="goToPage('insights-analytics')">Go to Analytics 2.0 →</button>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 300px;gap:16px">
+        <div class="card">
+          <div class="card-h"><h2>Today's Schedule</h2><div style="display:flex;gap:4px"><button class="btn btn-s btn-a">Classes</button><button class="btn btn-s">Appointments</button></div></div>
+          <table><thead><tr><th>Time</th><th>Class</th><th>Teacher</th><th>Room</th><th>Booked</th><th>Status</th></tr></thead><tbody id="sB"></tbody></table>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:16px">
+          <div class="card"><div class="card-h"><h2 style="font-size:14px">Big Spenders</h2></div><div id="dBS"></div></div>
+          <div class="notifications-panel">
+            <div class="notif-card"><div class="notif-title">Ta da! You're all set.</div><div class="notif-desc">Your studio is ready to accept bookings.</div></div>
+            <div class="notif-card"><div class="notif-title">March Webinars</div><div class="notif-desc">Join us for exclusive webinars on business growth.</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CLASSES PAGE -->
+    <div class="page" id="p-classes">
+      <div class="toolbar">
+        <div style="display:flex;align-items:center;gap:8px">
+          <button class="btn btn-s">‹</button>
+          <button class="btn btn-s btn-p">Today</button>
+          <button class="btn btn-s">›</button>
+          <span style="font-size:14px;font-weight:600;margin-left:8px">18 – 24 March 2026</span>
+        </div>
+        <div style="display:flex;gap:6px">
+          <button class="btn btn-s">Day</button>
+          <button class="btn btn-s btn-a">Week</button>
+          <button class="btn btn-s">Month</button>
+          <button class="btn btn-s btn-p" onclick="openAddClassModal()">+ Add Class</button>
+        </div>
+      </div>
+      <div class="filter-row">
+        <select class="filter-select"><option>All Locations</option><option>HOYHON CIRCUS</option><option>HOYHON Park - Silom</option></select>
+        <select class="filter-select"><option>All Service Categories</option><option>Acro/Aerial</option><option>Fitness</option><option>Yoga</option></select>
+        <select class="filter-select"><option>All Class Types</option><option>Body Lab</option><option>Stretch RCA</option><option>Hammock RCA</option></select>
+        <select class="filter-select"><option>All Class Levels</option><option>Beginner</option><option>Intermediate</option><option>Advanced</option></select>
+        <select class="filter-select"><option>All Instructors</option><option>Joh</option><option>Yak</option><option>Atom</option><option>Nassanun</option></select>
+      </div>
+      <div class="card">
+        <table>
+          <thead><tr><th>Status</th><th>Class</th><th>Teacher</th><th style="width:30px">✓</th><th>Assistant</th><th>Location</th><th>Room</th><th></th></tr></thead>
+          <tbody id="classesBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- APPOINTMENTS PAGE -->
+    <div class="page" id="p-appointments">
+      <div class="toolbar">
+        <h2 style="font-size:18px;font-weight:700">Appointments</h2>
+        <button class="btn btn-p">+ New Appointment</button>
+      </div>
+      <div class="card" style="padding:40px;text-align:center">
+        <p style="color:var(--muted);font-size:14px">No appointments scheduled</p>
+      </div>
+    </div>
+
+    <!-- COURSES PAGE -->
+    <div class="page" id="p-courses">
+      <div class="toolbar">
+        <h2 style="font-size:18px;font-weight:700">Courses</h2>
+        <button class="btn btn-p">+ New Course</button>
+      </div>
+      <div class="pg" id="cG"></div>
+    </div>
+
+    <!-- ROOMS PAGE -->
+    <div class="page" id="p-rooms">
+      <div class="toolbar">
+        <h2 style="font-size:18px;font-weight:700">Rooms</h2>
+      </div>
+      <div class="rg" id="rG"></div>
+    </div>
+
+    <!-- CHECK IN PAGE -->
+    <div class="page" id="p-checkin">
+      <div class="toolbar">
+        <h2 style="font-size:18px;font-weight:700">Check In</h2>
+      </div>
+      <div style="margin-bottom:16px">
+        <label style="font-size:12px;color:var(--muted);font-weight:600;text-transform:uppercase;margin-bottom:8px;display:block">Select Class</label>
+        <select class="filter-select" style="width:280px"><option>Stretch RCA (Begin/PM) — 13:30 - 14:30</option><option>Hammock RCA (All level/EVN) — 18:00 - 19:00</option></select>
+      </div>
+      <button class="btn btn-p" style="margin-bottom:16px">📷 Scan QR Code</button>
+      <div class="cih">
+        <div>
+          <div style="font-size:11px;font-weight:600;color:var(--teal);text-transform:uppercase;letter-spacing:.5px">Current Class</div>
+          <h2>Stretch RCA (Begin/PM)</h2>
+          <p>13:30 – 14:30 · Yak · Wall Bar 1</p>
+        </div>
+        <div class="cis">
+          <div><div class="n" style="color:var(--green)" id="ciC">2</div><div class="l">Checked In</div></div>
+          <div><div class="n">5</div><div class="l">Booked</div></div>
+          <div><div class="n" style="color:var(--muted)">6</div><div class="l">Capacity</div></div>
+        </div>
+      </div>
+      <div class="card" id="ciK"></div>
+    </div>
+
+    <!-- CLIENTS PAGE -->
+    <div class="page" id="p-clients">
+      <div class="toolbar">
+        <input class="search" placeholder="Search by name, email..." id="cS" oninput="fC()" style="width:320px">
+        <button class="btn btn-p" onclick="openAddClientModal()">+ Add Client</button>
+      </div>
+      <div class="card">
+        <table>
+          <thead><tr><th>Client</th><th>Contact</th><th>Package</th><th>Visits</th><th>Tags</th><th>Last Visit</th></tr></thead>
+          <tbody id="cB"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- POINT OF SALE PAGE -->
+    <div class="page" id="p-pos">
+      <div class="toolbar">
+        <h2 style="font-size:18px;font-weight:700">Point of Sale</h2>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 300px;gap:16px">
+        <div class="card">
+          <div class="card-h"><h2>Products & Services</h2></div>
+          <table>
+            <thead><tr><th>Product</th><th>Price</th><th>Qty</th><th></th></tr></thead>
+            <tbody id="posProducts">
+              <tr><td>Monthly Unlimited</td><td>฿5,900</td><td><input type="number" min="0" style="width:50px;padding:4px"></td><td><button class="btn btn-s btn-p">Add</button></td></tr>
+              <tr><td>10 Class Pack</td><td>฿4,500</td><td><input type="number" min="0" style="width:50px;padding:4px"></td><td><button class="btn btn-s btn-p">Add</button></td></tr>
+              <tr><td>Trial 3 Classes</td><td>฿990</td><td><input type="number" min="0" style="width:50px;padding:4px"></td><td><button class="btn btn-s btn-p">Add</button></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="card">
+          <div class="card-h"><h2>Open Tickets</h2></div>
+          <div style="padding:12px;text-align:center;color:var(--muted);font-size:12px">No open tickets</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- INSIGHTS - REPORTS PAGE -->
+    <div class="page" id="p-insights-reports">
+      <div class="toolbar">
+        <h2 style="font-size:18px;font-weight:700">Reports</h2>
+      </div>
+      <div class="card" style="padding:40px;text-align:center">
+        <p style="color:var(--muted);font-size:14px">Reports dashboard coming soon</p>
+      </div>
+    </div>
+
+    <!-- INSIGHTS - ANALYTICS PAGE -->
+    <div class="page" id="p-insights-analytics">
+      <div class="toolbar">
+        <h2 style="font-size:18px;font-weight:700">Analytics 2.0</h2>
+      </div>
+      <div class="kpi-grid" style="margin-bottom:20px">
+        <div class="kpi-card"><div class="lb">Total Net Sales (BHT)</div><div class="vl">414,573</div><div class="ch">↑ 49.0% vs Prev Year</div></div>
+        <div class="kpi-card"><div class="lb">Total Visits</div><div class="vl">730</div><div class="ch">↑ 57.3% vs Prev Year</div></div>
+        <div class="kpi-card"><div class="lb">Active Members</div><div class="vl">156</div><div class="ch">↑ 1.3% Mar 17 vs Mar 16</div></div>
+      </div>
+      <div style="margin-bottom:20px">
+        <input class="search" placeholder="Search dashboards..." style="width:320px">
+      </div>
+      <div style="margin-bottom:20px">
+        <h3 style="font-size:14px;font-weight:700;margin-bottom:12px">Your Favorite Dashboards</h3>
+        <div class="dg" style="grid-template-columns:repeat(4,1fr)">
+          <div class="dc"><div class="di">📊</div><div class="dn">Visits</div><div class="dd">Class visits & trends</div></div>
+          <div class="dc"><div class="di">💰</div><div class="dn">Sales</div><div class="dd">Revenue overview</div></div>
+          <div class="dc"><div class="di">👥</div><div class="dn">Memberships</div><div class="dd">Active & new members</div></div>
+          <div class="dc"><div class="di">📅</div><div class="dn">Classes</div><div class="dd">Class scheduling</div></div>
+        </div>
+      </div>
+      <div style="margin-bottom:20px">
+        <h3 style="font-size:14px;font-weight:700;margin-bottom:12px">All Dashboards</h3>
+        <div class="dg">
+          <div class="dc"><div class="di">📊</div><div class="dn">Overview</div></div>
+          <div class="dc"><div class="di">💰</div><div class="dn">Sales</div></div>
+          <div class="dc"><div class="di">👥</div><div class="dn">Visits</div></div>
+          <div class="dc"><div class="di">💳</div><div class="dn">Memberships</div></div>
+          <div class="dc"><div class="di">⭐</div><div class="dn">Weekly AI Insights<span class="badge">Beta</span></div></div>
+          <div class="dc"><div class="di">📅</div><div class="dn">Classes</div></div>
+          <div class="dc"><div class="di">📋</div><div class="dn">Appointments</div></div>
+          <div class="dc"><div class="di">🎟️</div><div class="dn">ClassPass</div></div>
+          <div class="dc"><div class="di">👥</div><div class="dn">Clients</div></div>
+          <div class="dc"><div class="di">💵</div><div class="dn">Payments</div></div>
+          <div class="dc"><div class="di">🔄</div><div class="dn">Autopay</div></div>
+          <div class="dc"><div class="di">📊</div><div class="dn">More...</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MARKETING PAGE -->
+    <div class="page" id="p-marketing">
+      <div class="toolbar">
+        <h2 style="font-size:18px;font-weight:700">Marketing</h2>
+      </div>
+      <div class="card" style="padding:40px;text-align:center">
+        <h2>Marketing Suite</h2>
+        <p style="color:var(--muted);margin-top:8px">Email campaigns, promotions & member engagement</p>
+        <p style="color:var(--muted);margin-top:8px;font-size:12px">Coming soon</p>
+      </div>
+    </div>
+
+    <!-- SERVICES - CLASSES PAGE -->
+    <div class="page" id="p-services-classes">
+      <div class="toolbar">
+        <h2 style="font-size:18px;font-weight:700">Class Types</h2>
+      </div>
+      <div class="card">
+        <table>
+          <thead><tr><th>Class</th><th>Category</th><th>Duration</th><th>Capacity</th><th>Level</th></tr></thead>
+          <tbody id="scB"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- SERVICES - PRICING PAGE -->
+    <div class="page" id="p-services-pricing">
+      <div class="toolbar">
+        <h2 style="font-size:18px;font-weight:700">Pricing & Packages</h2>
+      </div>
+      <div class="pg" id="spG"></div>
+    </div>
+
+    <!-- SERVICES - APPOINTMENTS PAGE -->
+    <div class="page" id="p-services-appointments">
+      <div class="toolbar"><h2 style="font-size:18px;font-weight:700">Appointment Types</h2><button class="btn btn-p">+ Add Appointment Type</button></div>
+      <div class="card">
+        <table>
+          <thead><tr><th>Name</th><th>Duration</th><th>Price</th><th>Staff</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td style="font-weight:600">Private Aerial Silk</td><td>60 min</td><td>฿2,500</td><td>All Instructors</td><td><span class="bd b-open">Active</span></td></tr>
+            <tr><td style="font-weight:600">Private Pole</td><td>60 min</td><td>฿2,500</td><td>Pom</td><td><span class="bd b-open">Active</span></td></tr>
+            <tr><td style="font-weight:600">Private Handstand</td><td>60 min</td><td>฿2,500</td><td>Joh</td><td><span class="bd b-open">Active</span></td></tr>
+            <tr><td style="font-weight:600">Duo Private Session</td><td>60 min</td><td>฿3,500</td><td>All Instructors</td><td><span class="bd b-open">Active</span></td></tr>
+            <tr><td style="font-weight:600">Performance Choreography</td><td>90 min</td><td>฿5,000</td><td>Joh, Art, Nassanun</td><td><span class="bd b-open">Active</span></td></tr>
+            <tr><td style="font-weight:600">Body Assessment</td><td>30 min</td><td>฿500</td><td>All Instructors</td><td><span class="bd b-open">Active</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- SERVICES - COURSES PAGE -->
+    <div class="page" id="p-services-courses">
+      <div class="toolbar"><h2 style="font-size:18px;font-weight:700">Courses</h2><button class="btn btn-p">+ Add Course</button></div>
+      <div class="card">
+        <table>
+          <thead><tr><th>Course</th><th>Duration</th><th>Sessions</th><th>Price</th><th>Capacity</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td style="font-weight:600">Aerial Silk Teacher Training</td><td>5 days</td><td>10 sessions (40 hrs)</td><td>฿35,000</td><td>8</td><td><span class="bd b-open">Open</span></td></tr>
+            <tr><td style="font-weight:600">Aerial Hoop Teacher Training</td><td>5 days</td><td>10 sessions (40 hrs)</td><td>฿35,000</td><td>8</td><td><span class="bd b-open">Open</span></td></tr>
+            <tr><td style="font-weight:600">Handstand Fundamentals Workshop</td><td>2 days</td><td>4 sessions (8 hrs)</td><td>฿8,900</td><td>12</td><td><span class="bd b-alm">Almost Full</span></td></tr>
+            <tr><td style="font-weight:600">Aerial Fundamentals (Beginners)</td><td>5 days</td><td>5 sessions (10 hrs)</td><td>฿12,900</td><td>10</td><td><span class="bd b-open">Open</span></td></tr>
+            <tr><td style="font-weight:600">Flexibility Intensive</td><td>3 days</td><td>6 sessions (12 hrs)</td><td>฿6,500</td><td>8</td><td><span class="bd b-open">Open</span></td></tr>
+            <tr><td style="font-weight:600">Performance Creation Lab</td><td>10 days</td><td>20 sessions (60 hrs)</td><td>฿45,000</td><td>6</td><td><span class="bd b-lead">Coming Soon</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- SERVICES - RETAIL PRODUCTS PAGE -->
+    <div class="page" id="p-services-retail">
+      <div class="toolbar"><h2 style="font-size:18px;font-weight:700">Retail Products</h2><button class="btn btn-p">+ Add Product</button></div>
+      <div class="card">
+        <table>
+          <thead><tr><th>Product</th><th>Category</th><th>Price</th><th>Stock</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td style="font-weight:600">Aerial Grip (Dry Hands)</td><td>Accessories</td><td>฿450</td><td>25</td><td><span class="bd b-open">In Stock</span></td></tr>
+            <tr><td style="font-weight:600">HOYHON Tank Top</td><td>Apparel</td><td>฿690</td><td>18</td><td><span class="bd b-open">In Stock</span></td></tr>
+            <tr><td style="font-weight:600">HOYHON Leggings</td><td>Apparel</td><td>฿990</td><td>12</td><td><span class="bd b-open">In Stock</span></td></tr>
+            <tr><td style="font-weight:600">Aerial Silk (Practice)</td><td>Equipment</td><td>฿3,500</td><td>5</td><td><span class="bd b-alm">Low Stock</span></td></tr>
+            <tr><td style="font-weight:600">Grip Tape Roll</td><td>Accessories</td><td>฿280</td><td>30</td><td><span class="bd b-open">In Stock</span></td></tr>
+            <tr><td style="font-weight:600">Pole Grip Spray</td><td>Accessories</td><td>฿550</td><td>15</td><td><span class="bd b-open">In Stock</span></td></tr>
+            <tr><td style="font-weight:600">HOYHON Water Bottle</td><td>Merch</td><td>฿390</td><td>0</td><td><span class="bd b-full">Out of Stock</span></td></tr>
+            <tr><td style="font-weight:600">Wrist Support Wrap</td><td>Accessories</td><td>฿350</td><td>20</td><td><span class="bd b-open">In Stock</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- SERVICES - ARRIVALS PAGE -->
+    <div class="page" id="p-services-arrivals">
+      <div class="toolbar"><h2 style="font-size:18px;font-weight:700">Arrivals</h2></div>
+      <div style="display:flex;gap:8px;margin-bottom:16px">
+        <select class="filter-select"><option>All Locations</option><option>HOYHON CIRCUS</option><option>HOYHON Park - Silom</option></select>
+        <select class="filter-select"><option>Today</option><option>This Week</option><option>This Month</option></select>
+      </div>
+      <div class="card">
+        <div class="card-h"><h2>Today's Arrivals — 19 March 2026</h2></div>
+        <table>
+          <thead><tr><th>Time</th><th>Client</th><th>Type</th><th>Class/Service</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td>09:05</td><td><div class="cr"><div class="ca">AP</div><span style="font-weight:600">Anne Poonnika</span></div></td><td>Class</td><td>Move Barre (Beg/AM)</td><td><span class="bd b-open">Checked In</span></td></tr>
+            <tr><td>09:58</td><td><div class="cr"><div class="ca">MR</div><span style="font-weight:600">Marco Rossi</span></div></td><td>Class</td><td>Aerial Silk (Begin/AM)</td><td><span class="bd b-open">Checked In</span></td></tr>
+            <tr><td>10:02</td><td><div class="cr"><div class="ca">SC</div><span style="font-weight:600">Sofie Carlsen</span></div></td><td>Class</td><td>Aerial Silk (Begin/AM)</td><td><span class="bd b-open">Checked In</span></td></tr>
+            <tr><td>—</td><td><div class="cr"><div class="ca">DC</div><span style="font-weight:600">David Chen</span></div></td><td>Class</td><td>Hammock Kids (17:00)</td><td><span class="bd b-alm">Upcoming</span></td></tr>
+            <tr><td>—</td><td><div class="cr"><div class="ca">JW</div><span style="font-weight:600">James Wilson</span></div></td><td>Class</td><td>Aerial Hammock (18:00)</td><td><span class="bd b-alm">Upcoming</span></td></tr>
+            <tr><td>—</td><td><div class="cr"><div class="ca">PS</div><span style="font-weight:600">Ploy Siriporn</span></div></td><td>Appointment</td><td>Private Aerial Silk (18:30)</td><td><span class="bd b-alm">Upcoming</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- SERVICES - CONTRACTS PAGE -->
+    <div class="page" id="p-services-contracts">
+      <div class="toolbar"><h2 style="font-size:18px;font-weight:700">Contracts</h2><button class="btn btn-p">+ New Contract</button></div>
+      <div class="card">
+        <table>
+          <thead><tr><th>Contract</th><th>Type</th><th>Duration</th><th>Auto-Renew</th><th>Clients</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td style="font-weight:600">Monthly Unlimited Agreement</td><td>Autopay</td><td>Month-to-month</td><td>Yes</td><td>45</td><td><span class="bd b-open">Active</span></td></tr>
+            <tr><td style="font-weight:600">Annual Pass Agreement</td><td>Autopay</td><td>12 months</td><td>Yes</td><td>12</td><td><span class="bd b-open">Active</span></td></tr>
+            <tr><td style="font-weight:600">10 Class Pack Terms</td><td>One-time</td><td>90 days validity</td><td>No</td><td>38</td><td><span class="bd b-open">Active</span></td></tr>
+            <tr><td style="font-weight:600">Teacher Training Agreement</td><td>One-time</td><td>Per course</td><td>No</td><td>8</td><td><span class="bd b-open">Active</span></td></tr>
+            <tr><td style="font-weight:600">Corporate Group Booking</td><td>Custom</td><td>Per event</td><td>No</td><td>3</td><td><span class="bd b-vip">Custom</span></td></tr>
+            <tr><td style="font-weight:600">Trial Membership Waiver</td><td>Waiver</td><td>30 days</td><td>No</td><td>22</td><td><span class="bd b-open">Active</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- STAFF PAGE -->
+    <div class="page" id="p-staff">
+      <div class="toolbar">
+        <h2 style="font-size:18px;font-weight:700">Staff</h2>
+      </div>
+      <div class="card">
+        <table>
+          <thead><tr><th>Staff</th><th>Role</th><th>Email</th><th>Classes This Week</th></tr></thead>
+          <tbody id="stB"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- SETTINGS PAGE -->
+    <div class="page" id="p-settings">
+      <div style="margin-bottom:20px">
+        <h2 style="font-size:20px;font-weight:700">Settings</h2>
+        <p style="color:var(--muted);font-size:13px">Manage your studio</p>
+      </div>
+      <div class="st">
+        <div class="sg">
+          <h3>Studio Information</h3>
+          <label>Studio Name</label>
+          <input value="HOYHON CIRCUS" readonly>
+          <label>Email</label>
+          <input value="info@hoyhon.com" readonly>
+          <label>Phone</label>
+          <input value="+66 2-XXX-XXXX">
+          <button class="btn btn-p">Save</button>
+        </div>
+        <div class="sg">
+          <h3>Billing</h3>
+          <label>Current Plan</label>
+          <select><option>Professional Studio - ฿5,900/mo</option></select>
+          <label>Billing Cycle</label>
+          <input value="Monthly" readonly>
+          <button class="btn">Manage Billing</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- MODALS -->
+<!-- ADD CLASS MODAL -->
+<div class="modal-bg" id="addClassModal">
+  <div class="modal">
+    <button class="close-btn" onclick="closeAddClassModal()">×</button>
+    <h2>Add New Class</h2>
+    <label>Class Type</label>
+    <select id="classTypeSelect">
+      <option>Body Lab</option>
+      <option>Stretch RCA</option>
+      <option>Hammock RCA</option>
+      <option>Hoop RCA</option>
+      <option>Pilates Burn</option>
+      <option>Silk RCA</option>
+      <option>Handstand</option>
+      <option>Pole Spinning</option>
+      <option>Cube</option>
+      <option>Strap</option>
+      <option>Trapeze</option>
+      <option>Pilates</option>
+      <option>Barre</option>
+      <option>Pole</option>
+      <option>Yoga Flow</option>
+      <option>Aerials 101</option>
+    </select>
+    <label>Date</label>
+    <input type="date">
+    <label>Start Time</label>
+    <input type="time">
+    <label>End Time</label>
+    <input type="time">
+    <label>Instructor</label>
+    <select>
+      <option>Joh</option>
+      <option>Nassanun</option>
+      <option>Atom</option>
+      <option>Pitch</option>
+      <option>Yak</option>
+      <option>Pom</option>
+      <option>Art</option>
+      <option>Donut</option>
+      <option>Succo</option>
+      <option>Kao</option>
+      <option>Mint</option>
+    </select>
+    <label>Room</label>
+    <select>
+      <option>Wall Bar 1</option>
+      <option>Pilates Room</option>
+      <option>GYM 1 Sling Motor</option>
+      <option>PSL LOGO Room 2</option>
+      <option>Studio A</option>
+      <option>Studio B</option>
+      <option>Trapeze Rig</option>
+      <option>Yoga Studio</option>
+    </select>
+    <label>Capacity</label>
+    <input type="number" min="1" value="10">
+    <div class="modal-footer">
+      <button class="btn" onclick="closeAddClassModal()">Cancel</button>
+      <button class="btn btn-p" onclick="saveClass()">Save</button>
+    </div>
+  </div>
+</div>
+
+<!-- ADD CLIENT MODAL -->
+<div class="modal-bg" id="addClientModal">
+  <div class="modal">
+    <button class="close-btn" onclick="closeAddClientModal()">×</button>
+    <h2>Add New Client</h2>
+    <label>Full Name</label>
+    <input id="clientName" placeholder="Enter full name">
+    <label>Email</label>
+    <input id="clientEmail" type="email" placeholder="Enter email">
+    <label>Phone</label>
+    <input id="clientPhone" placeholder="Enter phone number">
+    <label>LINE ID</label>
+    <input id="clientLineID" placeholder="Enter LINE ID">
+    <label>Tags</label>
+    <div class="checkbox-group">
+      <div class="checkbox-item">
+        <input type="checkbox" id="tag-vip" value="VIP">
+        <label for="tag-vip">VIP</label>
+      </div>
+      <div class="checkbox-item">
+        <input type="checkbox" id="tag-new" value="New">
+        <label for="tag-new">New</label>
+      </div>
+      <div class="checkbox-item">
+        <input type="checkbox" id="tag-lead" value="Lead">
+        <label for="tag-lead">Lead</label>
+      </div>
+      <div class="checkbox-item">
+        <input type="checkbox" id="tag-regular" value="Regular">
+        <label for="tag-regular">Regular</label>
+      </div>
+    </div>
+    <label>Package</label>
+    <select id="clientPackage">
+      <option>—</option>
+      <option>Trial 3 Classes</option>
+      <option>10 Class Pack</option>
+      <option>20 Class Pack</option>
+      <option>30 Class Pack</option>
+      <option>Monthly Unlimited</option>
+      <option>Annual Pass</option>
+    </select>
+    <label>Notes</label>
+    <textarea id="clientNotes" placeholder="Add any notes..."></textarea>
+    <div class="modal-footer">
+      <button class="btn" onclick="closeAddClientModal()">Cancel</button>
+      <button class="btn btn-p" onclick="saveClient()">Save</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ===== SUPABASE CONNECTION =====
+var SB_URL = 'https://ranfrjmynukmolprvrgn.supabase.co';
+var SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJhbmZyam15bnVrbW9scHJ2cmduIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM4NDU0MTIsImV4cCI6MjA4OTQyMTQxMn0.WPO7tIHERlkDx97mzzMO4B-f12UmvwhqGerDEwVfwWM';
+var sb = null;
+var dbMode = false; // true = use Supabase, false = use mock data
+
+try {
+  if (window.supabase) {
+    sb = window.supabase.createClient(SB_URL, SB_KEY);
+    dbMode = true;
+    console.log('✅ Supabase connected');
+  }
+} catch(e) { console.log('⚠️ Supabase not available, using mock data'); }
+
+// ===== SUPABASE CRUD FUNCTIONS =====
+async function dbLoadClasses() {
+  if (!dbMode) return null;
+  try {
+    var { data } = await sb.from('classes').select('*, class_type:class_types(name, color, category), location:locations(name), room:rooms(name)').eq('is_visible', true).order('date').order('start_time');
+    return data;
+  } catch(e) { return null; }
+}
+
+async function dbLoadClients() {
+  if (!dbMode) return null;
+  try {
+    var { data } = await sb.from('profiles').select('*').order('created_at', {ascending:false});
+    return data;
+  } catch(e) { return null; }
+}
+
+async function dbLoadClassTypes() {
+  if (!dbMode) return null;
+  try {
+    var { data } = await sb.from('class_types').select('*').eq('is_active', true).order('name');
+    return data;
+  } catch(e) { return null; }
+}
+
+async function dbLoadPackages() {
+  if (!dbMode) return null;
+  try {
+    var { data } = await sb.from('packages').select('*').eq('is_active', true).order('price');
+    return data;
+  } catch(e) { return null; }
+}
+
+async function dbLoadLocations() {
+  if (!dbMode) return null;
+  try {
+    var { data } = await sb.from('locations').select('*').eq('is_active', true);
+    return data;
+  } catch(e) { return null; }
+}
+
+async function dbLoadRooms() {
+  if (!dbMode) return null;
+  try {
+    var { data } = await sb.from('rooms').select('*').eq('is_active', true);
+    return data;
+  } catch(e) { return null; }
+}
+
+async function dbAddClass(classData) {
+  if (!dbMode) return null;
+  try {
+    var { data } = await sb.from('classes').insert(classData).select().single();
+    return data;
+  } catch(e) { return null; }
+}
+
+async function dbAddClient(clientData) {
+  if (!dbMode) return null;
+  try {
+    var { data } = await sb.from('profiles').insert({...clientData, id: crypto.randomUUID(), role:'member'}).select().single();
+    return data;
+  } catch(e) { return null; }
+}
+
+async function dbCheckIn(bookingId) {
+  if (!dbMode) return false;
+  try {
+    await sb.from('bookings').update({status:'checked_in', checked_in_at: new Date().toISOString()}).eq('id', bookingId);
+    return true;
+  } catch(e) { return false; }
+}
+
+// ===== CONNECTION STATUS INDICATOR =====
+function showDbStatus() {
+  var el = document.getElementById('dbStatus');
+  if (el) el.innerHTML = dbMode ?
+    '<span style="color:var(--green);font-size:11px;font-weight:600">● Connected to Supabase</span>' :
+    '<span style="color:var(--yellow);font-size:11px;font-weight:600">● Demo Mode (mock data)</span>';
+}
+
+// ===== TRY LOAD REAL DATA ON START =====
+async function initData() {
+  if (dbMode) {
+    var realClassTypes = await dbLoadClassTypes();
+    var realPackages = await dbLoadPackages();
+    var realRooms = await dbLoadRooms();
+    var realLocations = await dbLoadLocations();
+
+    if (realClassTypes && realClassTypes.length > 0) {
+      console.log('📊 Loaded', realClassTypes.length, 'class types from Supabase');
+      // Update service classes table
+      var h='';
+      realClassTypes.forEach(function(s){
+        h+='<tr><td style="font-weight:600">'+s.name+'</td><td>'+( s.category||'—')+'</td><td>'+(s.duration_minutes||60)+' min</td><td>'+(s.default_capacity||10)+'</td><td><span class="bd b-open">'+(s.level||'all')+'</span></td></tr>';
+      });
+      if (document.getElementById('scB')) document.getElementById('scB').innerHTML = h;
+    }
+
+    if (realPackages && realPackages.length > 0) {
+      console.log('📦 Loaded', realPackages.length, 'packages from Supabase');
+      var h='';
+      realPackages.forEach(function(p){
+        var tp = p.type === 'unlimited' ? 'Unlimited' : 'Credits';
+        h+='<div class="pc"><div class="pn">'+p.name+'</div><div class="pp">฿'+Number(p.price).toLocaleString()+'</div><div class="bd '+(tp==='Unlimited'?'b-vip':'b-new')+'" style="margin-bottom:8px">'+tp+'</div><div class="pd">'+(p.credits ? p.credits+' classes · ' : 'Unlimited · ')+(p.duration_days||30)+' days</div></div>';
+      });
+      if (document.getElementById('spG')) document.getElementById('spG').innerHTML = h;
+    }
+
+    if (realRooms && realRooms.length > 0) {
+      console.log('🏠 Loaded', realRooms.length, 'rooms from Supabase');
+    }
+  }
+  showDbStatus();
+}
+
+// Run on page load
+setTimeout(initData, 500);
+
+// DATA
+var S=[{t:"10:00",n:"Body Lab (Pilates/Beg/PM)",te:"Succo",r:"PSL LOGO Room 2",b:2,c:6},{t:"13:30",n:"Stretch RCA (Begin/PM)",te:"Yak",r:"Wall Bar 1",b:5,c:6},{t:"18:00",n:"Hammock RCA (All level/EVN)",te:"Atom",r:"GYM 1 Sling Motor",b:3,c:10},{t:"18:30",n:"Stretch RCA (Begin/PM)",te:"Yak",r:"Wall Bar 1",b:6,c:6},{t:"18:00",n:"Pilates Burn (Beg/EVN)",te:"Donut",r:"Pilates Room",b:10,c:10},{t:"19:30",n:"Hoop RCA (Begin/EVN)",te:"Atom",r:"GYM 1 Sling Motor",b:6,c:10}];
+var W=[{d:"Tue",dt:18,tod:1,cl:[{t:"10:00",n:"Body Lab",co:"#60A5FA",i:"Succo",b:2,c:6},{t:"13:30",n:"Stretch RCA",co:"#34D399",i:"Yak",b:5,c:6},{t:"18:00",n:"Hammock RCA",co:"#2DD4BF",i:"Atom",b:3,c:10},{t:"18:00",n:"Pilates Burn",co:"#60A5FA",i:"Donut",b:10,c:10},{t:"19:30",n:"Hoop RCA",co:"#F472B6",i:"Atom",b:6,c:10}]},{d:"Wed",dt:19,cl:[{t:"11:00",n:"Hoop RCA",co:"#F472B6",i:"Pitch",b:3,c:10},{t:"18:00",n:"Handstand",co:"#FBBF24",i:"Joh",b:6,c:8},{t:"18:30",n:"Silk RCA",co:"#F87171",i:"Nassanun",b:4,c:10},{t:"19:30",n:"Hammock RCA",co:"#2DD4BF",i:"Nassanun",b:4,c:10}]},{d:"Thu",dt:20,cl:[{t:"13:00",n:"Cube",co:"#A78BFA",i:"Kao",b:1,c:6},{t:"16:30",n:"Pole Spinning",co:"#818CF8",i:"Pom",b:0,c:8},{t:"18:00",n:"Silk RCA",co:"#F87171",i:"Art",b:5,c:10},{t:"19:00",n:"Strap",co:"#9B72CF",i:"Art",b:1,c:10}]},{d:"Fri",dt:21,cl:[{t:"11:00",n:"Hoop RCA",co:"#F472B6",i:"Atom",b:3,c:10},{t:"14:00",n:"Stretch RCA",co:"#34D399",i:"Yak",b:1,c:6},{t:"17:00",n:"Trapeze",co:"#FB923C",i:"Pitch",b:0,c:10}]},{d:"Sat",dt:22,cl:[{t:"10:00",n:"Pilates",co:"#60A5FA",i:"Succo",b:6,c:6},{t:"13:30",n:"Stretch RCA",co:"#34D399",i:"Yak",b:5,c:6},{t:"18:00",n:"Pilates Burn",co:"#60A5FA",i:"Donut",b:10,c:10},{t:"19:30",n:"Hoop RCA",co:"#F472B6",i:"Atom",b:6,c:10}]},{d:"Sun",dt:23,cl:[{t:"10:00",n:"Barre",co:"#E879F9",i:"Mint",b:4,c:8},{t:"13:00",n:"Silk RCA",co:"#F87171",i:"Nassanun",b:3,c:10},{t:"18:00",n:"Pole",co:"#818CF8",i:"Pom",b:7,c:8}]},{d:"Mon",dt:24,cl:[{t:"10:00",n:"Hoop RCA",co:"#F472B6",i:"Pitch",b:2,c:10},{t:"18:00",n:"Handstand",co:"#FBBF24",i:"Joh",b:5,c:8},{t:"19:00",n:"Silk RCA",co:"#F87171",i:"Nassanun",b:8,c:10}]}];
+var CL=[{n:"Anne Poonnika",e:"anne.p@gmail.com",ph:"089-xxx-xxxx",pk:"Monthly Unlimited",v:42,tg:["VIP","Regular"],l:"17 Mar"},{n:"Tatsapon J.",e:"tatsapon.j@gmail.com",ph:"091-xxx-xxxx",pk:"10 Class Pack",v:28,tg:["New"],l:"15 Mar"},{n:"Sofie Carlsen",e:"sofie.c@outlook.com",ph:"065-xxx-xxxx",pk:"Monthly Unlimited",v:15,tg:["Regular"],l:"18 Mar"},{n:"Pim Suwannarat",e:"pim.s@gmail.com",ph:"082-xxx-xxxx",pk:"10 Class Pack",v:8,tg:["At-Risk"],l:"10 Mar"},{n:"Marco Rossi",e:"marco.r@gmail.com",ph:"093-xxx-xxxx",pk:"Annual Pass",v:55,tg:["VIP","Regular"],l:"18 Mar"},{n:"Kannika Wongchai",e:"kannika.w@yahoo.com",ph:"086-xxx-xxxx",pk:"Trial 3 Classes",v:3,tg:["New","At-Risk"],l:"28 Feb"},{n:"David Chen",e:"david.c@gmail.com",ph:"097-xxx-xxxx",pk:"10 Class Pack",v:19,tg:["Regular"],l:"16 Mar"},{n:"Nattaya Pinket",e:"nattaya.p@gmail.com",ph:"088-xxx-xxxx",pk:"—",v:0,tg:["Lead"],l:"—"},{n:"James Wilson",e:"james.w@gmail.com",ph:"094-xxx-xxxx",pk:"Monthly Unlimited",v:35,tg:["VIP"],l:"18 Mar"},{n:"Ploy Siriporn",e:"ploy.s@gmail.com",ph:"081-xxx-xxxx",pk:"20 Class Pack",v:12,tg:["Regular"],l:"14 Mar"}];
+var CI=[{n:"Anne Poonnika",pk:"Monthly Unlimited",dn:true,tm:"13:22"},{n:"Sofie Carlsen",pk:"Monthly Unlimited",dn:true,tm:"13:25"},{n:"David Chen",pk:"10 Class Pack (7 left)",dn:false,tm:null},{n:"Marco Rossi",pk:"Annual Pass",dn:false,tm:null},{n:"Tatsapon J.",pk:"10 Class Pack (3 left)",dn:false,tm:null}];
+var PK=[{n:"Trial 3 Classes",p:"฿990",tp:"Credits",d:"3 classes · Valid 30 days"},{n:"10 Class Pack",p:"฿4,500",tp:"Credits",d:"10 classes · Valid 90 days"},{n:"20 Class Pack",p:"฿7,900",tp:"Credits",d:"20 classes · Valid 120 days"},{n:"30 Class Pack",p:"฿10,500",tp:"Credits",d:"30 classes · Valid 150 days"},{n:"Monthly Unlimited",p:"฿5,900",tp:"Unlimited",d:"Unlimited classes · 30 days"},{n:"Annual Pass",p:"฿49,900",tp:"Unlimited",d:"Unlimited classes · 365 days"}];
+var CRS=[{n:"Teacher Training",d:"2 days · 16 hours",p:"฿8,900"},{n:"Aerial Fundamentals Workshop",d:"5 days · 20 hours",p:"฿12,900"}];
+var RMS=[{n:"Wall Bar 1",ca:6,loc:"CIRCUS",st:"Available"},{n:"Pilates Room",ca:10,loc:"CIRCUS",st:"Available"},{n:"GYM 1 Sling Motor",ca:10,loc:"CIRCUS",st:"In Use"},{n:"PSL LOGO Room 2",ca:6,loc:"CIRCUS",st:"Available"},{n:"Studio A",ca:8,loc:"SILOM",st:"Available"},{n:"Studio B",ca:12,loc:"SILOM",st:"Available"},{n:"Trapeze Rig",ca:4,loc:"SILOM",st:"In Use"},{n:"Yoga Studio",ca:15,loc:"SILOM",st:"Available"}];
+var STAFF=[{n:"Joh",r:"Founder/Instructor",e:"joh@hoyhon.com",c:3},{n:"Nassanun",r:"Senior Instructor",e:"nassanun@hoyhon.com",c:4},{n:"Atom",r:"Instructor",e:"atom@hoyhon.com",c:5},{n:"Pitch",r:"Instructor",e:"pitch@hoyhon.com",c:2},{n:"Yak",r:"Instructor",e:"yak@hoyhon.com",c:6},{n:"Pom",r:"Instructor",e:"pom@hoyhon.com",c:3},{n:"Art",r:"Instructor",e:"art@hoyhon.com",c:4},{n:"Donut",r:"Instructor",e:"donut@hoyhon.com",c:2},{n:"Succo",r:"Instructor",e:"succo@hoyhon.com",c:3},{n:"Kao",r:"Instructor",e:"kao@hoyhon.com",c:1},{n:"Mint",r:"Instructor",e:"mint@hoyhon.com",c:2}];
+var SC=[{n:"Body Lab",cat:"Pilates",dur:"60 min",cap:6,lvl:"Beginner"},{n:"Stretch RCA",cat:"Flexibility",dur:"45 min",cap:6,lvl:"Beginner"},{n:"Hammock RCA",cat:"Aerial",dur:"60 min",cap:10,lvl:"All"},{n:"Hoop RCA",cat:"Aerial",dur:"60 min",cap:10,lvl:"Intermediate"},{n:"Pilates Burn",cat:"Pilates",dur:"50 min",cap:10,lvl:"All"},{n:"Silk RCA",cat:"Aerial",dur:"60 min",cap:10,lvl:"Intermediate"},{n:"Handstand",cat:"Acro",dur:"90 min",cap:8,lvl:"Advanced"},{n:"Pole Spinning",cat:"Pole",dur:"60 min",cap:8,lvl:"Beginner"},{n:"Cube",cat:"Acro",dur:"45 min",cap:6,lvl:"Beginner"},{n:"Strap",cat:"Aerial",dur:"60 min",cap:10,lvl:"Intermediate"},{n:"Trapeze",cat:"Aerial",dur:"60 min",cap:10,lvl:"All"},{n:"Pilates",cat:"Pilates",dur:"55 min",cap:6,lvl:"All"},{n:"Barre",cat:"Fitness",dur:"50 min",cap:8,lvl:"Beginner"},{n:"Pole",cat:"Pole",dur:"60 min",cap:8,lvl:"All"},{n:"Yoga Flow",cat:"Yoga",dur:"60 min",cap:15,lvl:"All"},{n:"Aerials 101",cat:"Aerial",dur:"90 min",cap:6,lvl:"Beginner"}];
+
+// FUNCTIONS
+function pc(b,c){var r=b/c;return r>=1?'var(--red)':r>=.8?'var(--yellow)':'var(--green)'}
+function sb(b,c){if(b>=c)return'<span class="bd b-full">Full</span>';if(b>=c*.8)return'<span class="bd b-alm">Almost Full</span>';return'<span class="bd b-open">Open</span>'}
+function tb(t){var m={VIP:'b-vip','At-Risk':'b-risk',New:'b-new',Lead:'b-lead',Regular:'b-reg'};return'<span class="bd '+(m[t]||'b-reg')+'">'+t+'</span>'}
+function ini(n){return n.split(' ').map(function(w){return w[0]}).join('').substring(0,2).toUpperCase()}
+function toggleSub(e,id){e.stopPropagation();var sub=document.getElementById(id);var item=e.currentTarget;item.classList.toggle('open');sub.classList.toggle('show')}
+function toggleMenu(){}
+function goToPage(page){document.querySelectorAll('.nav-item:not(.has-sub)').forEach(function(n){n.classList.remove('active')});var nav=document.querySelector('[data-page="'+page+'"]');if(nav)nav.classList.add('active');document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active')});var el=document.getElementById('p-'+page);if(el)el.classList.add('active')}
+
+// NAV CLICK HANDLER
+document.getElementById('nav').onclick=function(e){
+  var it=e.target.closest('.nav-item:not(.has-sub)');
+  if(!it)return;
+  var pg=it.getAttribute('data-page');
+  if(!pg)return;
+  document.querySelectorAll('.nav-item:not(.has-sub)').forEach(function(n){n.classList.remove('active')});
+  it.classList.add('active');
+  document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active')});
+  var el=document.getElementById('p-'+pg);
+  if(el){
+    el.classList.add('active');
+    var T={dashboard:"Dashboard",classes:"Classes",appointments:"Appointments",courses:"Courses",rooms:"Rooms",checkin:"Check In",clients:"Clients",pos:"Point of Sale","insights-reports":"Reports","insights-analytics":"Analytics 2.0",marketing:"Marketing","services-classes":"Class Types","services-appointments":"Appointment Types","services-courses":"Courses","services-pricing":"Pricing & Packages","services-retail":"Retail Products","services-arrivals":"Arrivals","services-contracts":"Contracts",staff:"Staff",settings:"Settings"};
+    document.getElementById('pT').textContent=T[pg]||pg;
+  }
+};
+
+// DASHBOARD - TODAY'S SCHEDULE
+var h='';S.forEach(function(s){h+='<tr><td style="font-weight:600">'+s.t+'</td><td style="font-weight:500">'+s.n+'</td><td>'+s.te+'</td><td>'+s.r+'</td><td><div class="pw"><div class="pb"><div class="pf" style="width:'+Math.round(s.b/s.c*100)+'%;background:'+pc(s.b,s.c)+'"></div></div><span class="pt">'+s.b+'/'+s.c+'</span></div></td><td>'+sb(s.b,s.c)+'</td></tr>'});
+document.getElementById('sB').innerHTML=h;
+
+// DASHBOARD - BIG SPENDERS
+function rDash(){
+  var bs=CL.sort(function(a,b){return b.v-a.v}).slice(0,3);
+  var h='';bs.forEach(function(c){h+='<div class="cc"><div class="cn">'+c.n+'</div><div class="ci">'+c.v+' visits</div></div>'});
+  document.getElementById('dBS').innerHTML=h;
+}
+rDash();
+
+// CLASSES - WEEKLY CALENDAR
+h='';W.forEach(function(d){h+='<div><div class="dh'+(d.tod?' tod':'')+'">'+d.d+'<span class="dt">'+d.dt+'</span></div>';d.cl.forEach(function(c){var p=Math.round(c.b/c.c*100);h+='<div class="cc" style="border-left-color:'+c.co+'"><div class="ct">'+c.t+'</div><div class="cn">'+c.n+'</div><div class="ci">'+c.i+'</div><div class="cp"><div class="mb"><div class="mf" style="width:'+p+'%;background:'+pc(c.b,c.c)+'"></div></div><span>'+c.b+'/'+c.c+'</span></div></div>'});h+='</div>'});
+document.getElementById('wG').innerHTML=h;
+
+// CLASSES TABLE
+function renderClassesTable(){
+  var h='';S.forEach(function(s,i){
+    var bookingStr=s.b+'/'+s.c;
+    var statusLabel=(s.b>=s.c)?'Full ('+bookingStr+')':'Sign In ('+bookingStr+')';
+    var statusClass=(s.b>=s.c)?'b-full':'b-open';
+    h+='<tr>';
+    h+='<td><span class="bd '+statusClass+'">'+statusLabel+'</span></td>';
+    h+='<td style="font-weight:600;cursor:pointer">'+s.n+'</td>';
+    h+='<td>'+s.te+'</td>';
+    h+='<td style="text-align:center"><input type="checkbox"></td>';
+    h+='<td>—</td>';
+    h+='<td>'+s.r.split('(')[0].trim()+'</td>';
+    h+='<td>'+s.r+'</td>';
+    h+='<td style="text-align:center"><button class="btn btn-s" onclick="alert(\'Edit class options\')">⋮</button></td>';
+    h+='</tr>';
+  });
+  document.getElementById('classesBody').innerHTML=h;
+}
+renderClassesTable();
+
+// COURSES
+h='';CRS.forEach(function(c){h+='<div class="pc"><div class="pn">'+c.n+'</div><div class="pp">'+c.p+'</div><div class="pd">'+c.d+'</div></div>'});
+document.getElementById('cG').innerHTML=h;
+
+// ROOMS
+h='';RMS.forEach(function(r){h+='<div class="rc"><div class="rn">'+r.n+'</div><div class="rl">'+r.ca+' capacity</div><div class="rl">'+r.loc+'</div><div class="rs">'+r.st+'</div></div>'});
+document.getElementById('rG').innerHTML=h;
+
+// CLIENTS TABLE
+function rC(list){var h='';list.forEach(function(c){h+='<tr><td><div class="cr"><div class="ca">'+ini(c.n)+'</div><div style="font-weight:600;font-size:13px">'+c.n+'</div></div></td><td><div style="font-size:12px">'+c.e+'</div><div style="font-size:11px;color:var(--muted)">'+c.ph+'</div></td><td style="font-size:13px">'+c.pk+'</td><td style="font-weight:600">'+c.v+'</td><td><div class="tags">'+c.tg.map(tb).join('')+'</div></td><td>'+c.l+'</td></tr>'});document.getElementById('cB').innerHTML=h}
+rC(CL);
+function fC(){var q=document.getElementById('cS').value.toLowerCase();rC(q?CL.filter(function(c){return c.n.toLowerCase().indexOf(q)>=0||c.e.toLowerCase().indexOf(q)>=0}):CL)}
+
+// CHECK IN
+function rCI(){var h='';CI.forEach(function(c,i){h+='<div class="cir'+(c.dn?' dn':'')+'"><div class="cr"><div class="ca" style="'+(c.dn?'background:var(--green-bg);color:var(--green)':'')+'">'+( c.dn?'✓':ini(c.n))+'</div><div><div style="font-weight:600;font-size:13px">'+c.n+'</div><div style="font-size:12px;color:var(--muted)">'+c.pk+'</div></div></div>';if(c.dn){h+='<span class="cb">✓ '+c.tm+'</span>'}else{h+='<div style="display:flex;gap:6px"><button class="bc" onclick="dCI('+i+')">Check In</button><button class="bx">✕</button></div>'}h+='</div>'});document.getElementById('ciK').innerHTML=h;document.getElementById('ciC').textContent=CI.filter(function(c){return c.dn}).length}
+rCI();
+function dCI(i){var now=new Date();CI[i].dn=true;CI[i].tm=('0'+now.getHours()).slice(-2)+':'+('0'+now.getMinutes()).slice(-2);rCI()}
+
+// PRICING
+h='';PK.forEach(function(p){h+='<div class="pc"><div class="pn">'+p.n+'</div><div class="pp">'+p.p+'</div><div class="bd '+(p.tp==='Unlimited'?'b-vip':'b-new')+'" style="margin-bottom:8px">'+p.tp+'</div><div class="pd">'+p.d+'</div></div>'});
+document.getElementById('spG').innerHTML=h;
+
+// SERVICE CLASSES
+h='';SC.forEach(function(s){h+='<tr><td style="font-weight:600">'+s.n+'</td><td>'+s.cat+'</td><td>'+s.dur+'</td><td>'+s.cap+'</td><td><span class="bd b-open">'+s.lvl+'</span></td></tr>'});
+document.getElementById('scB').innerHTML=h;
+
+// STAFF
+h='';STAFF.forEach(function(s){h+='<tr><td><div class="cr"><div class="ca">'+ini(s.n)+'</div><div><div style="font-weight:600;font-size:13px">'+s.n+'</div><div style="font-size:12px;color:var(--muted)">'+s.r+'</div></div></div></td><td>'+s.r+'</td><td style="font-size:12px">'+s.e+'</td><td style="font-weight:600">'+s.c+' classes</td></tr>'});
+document.getElementById('stB').innerHTML=h;
+
+// GLOBAL SEARCH
+function handleClientSearch(){
+  var q=document.getElementById('topSearch').value.toLowerCase();
+  var results=document.getElementById('searchResults');
+  if(!q){results.classList.remove('show');return}
+  var matches=CL.filter(function(c){return c.n.toLowerCase().indexOf(q)>=0||c.e.toLowerCase().indexOf(q)>=0});
+  var h='';
+  matches.slice(0,5).forEach(function(c){
+    h+='<div class="search-result-item" onclick="goToClientsPage(\''+c.n+'\')">'+c.n+'<br><span style="font-size:11px;color:var(--muted)">'+c.e+'</span></div>';
+  });
+  results.innerHTML=h||'<div class="search-result-item" style="cursor:default">No results</div>';
+  results.classList.add('show');
+}
+function goToClientsPage(name){goToPage('clients');document.getElementById('cS').value=name;fC();document.getElementById('searchResults').classList.remove('show')}
+
+// ===== AI ASSISTANT =====
+var aiKB={
+  'จองคลาส':['วิธีจองคลาส:','1. ไปที่หน้า Classes ในเมนูซ้าย','2. ดูตารางคลาสรายสัปดาห์','3. คลิกที่คลาสที่ต้องการ','4. กด "Book Now" เพื่อจอง','5. เลือกแพ็คเกจที่จะใช้ตัดครั้ง','6. ยืนยันการจอง — จะได้รับแจ้งเตือนทาง LINE'].join('\n'),
+  'เช็คอิน':['วิธีเช็คอินลูกค้า:','1. ไปที่หน้า Check In','2. เลือกคลาสปัจจุบัน','3. ดูรายชื่อลูกค้าที่จอง','4. กดปุ่ม "Check In" สีเขียวข้างชื่อลูกค้า','5. ระบบจะบันทึกเวลาเช็คอินอัตโนมัติ','หรือใช้ QR Code Scan ได้เลย'].join('\n'),
+  'แพ็คเกจ':['แพ็คเกจที่มี:','• Trial 3 Classes — ฿990 (30 วัน)','• 10 Class Pack — ฿4,500 (90 วัน)','• 20 Class Pack — ฿7,900 (120 วัน)','• 30 Class Pack — ฿10,500 (150 วัน)','• Monthly Unlimited — ฿5,900/เดือน','• Annual Pass — ฿49,900/ปี','','ดูเพิ่มเติมที่ Services & Products → Pricing'].join('\n'),
+  'เพิ่มลูกค้า':['วิธีเพิ่มลูกค้าใหม่:','1. ไปที่หน้า Clients','2. กดปุ่ม "+ Add Client"','3. กรอกข้อมูล: ชื่อ, อีเมล, เบอร์โทร','4. เลือก Tags (VIP, New, Lead ฯลฯ)','5. กด Save — ลูกค้าจะปรากฏในระบบ'].join('\n'),
+  'ยอดขาย':['วิธีดูยอดขาย:','1. หน้า Dashboard แสดง KPIs หลัก','  • Total Net Sales: 414,573 BHT','  • Total Visits: 730','  • Active Members: 156','2. ดูเพิ่มเติมที่ Insights → Analytics','3. มี 12 dashboards: Overview, Sales, Visits, Memberships, Classes, Payments ฯลฯ'].join('\n'),
+  'เพิ่มคลาส':['วิธีเพิ่มคลาสใหม่:','1. ไปที่หน้า Classes','2. กดปุ่ม "+ Add Class"','3. เลือก: ประเภทคลาส, วัน-เวลา, ครูผู้สอน, ห้อง, จำนวนที่นั่ง','4. กด Save','','จัดการประเภทคลาสที่ Services & Products → Classes (มี 16 ประเภท)'].join('\n'),
+  'ยกเลิก':['วิธียกเลิกการจอง:','1. ไปที่หน้า Clients','2. คลิกชื่อลูกค้า','3. เลือกการจองที่ต้องการยกเลิก','4. กดปุ่ม "Cancel Booking"','5. ระบบจะคืน credit กลับให้'].join('\n'),
+  'ตารางสอน':['ดูตารางสอน:','1. ไปที่หน้า Classes','2. เลือกระยะเวลา: Day / Week / Month','3. กดปุ่ม ‹ › เพื่อเปลี่ยนสัปดาห์','4. กรองตามสาขา, ประเภท, ครูผู้สอน','5. ดูตารางคลาสเต็มไปทั้งหมด'].join('\n'),
+  'ห้อง':['ข้อมูลห้องเรียน (8 ห้อง):','HOYHON CIRCUS (RCA):','• Wall Bar 1 (6 คน), Pilates Room (10 คน)','• GYM 1 Sling Motor (10 คน), PSL LOGO Room 2 (6 คน)','HOYHON Park (Silom):','• Studio A (8 คน), Studio B (12 คน)','• Trapeze Rig (4 คน), Yoga Studio (15 คน)'].join('\n'),
+  'default':'สวัสดีค่ะ! ฉันคือ HOYHON AI Assistant 🤖\n\nฉันช่วยตอบคำถามเกี่ยวกับการใช้งานระบบได้ เช่น:\n• วิธีจองคลาส, เช็คอิน, ดูแพ็คเกจ\n• เพิ่มลูกค้า, ดูยอดขาย\n• เพิ่มคลาส, ดูตารางสอน\n• ข้อมูลครู, ห้องเรียน\n\nลองถามได้เลยค่ะ!'
+};
+
+function aiAnswer(q){
+  q=q.toLowerCase();
+  if(q.indexOf('จอง')>=0||q.indexOf('book')>=0) return aiKB['จองคลาส'];
+  if(q.indexOf('เช็คอิน')>=0||q.indexOf('check')>=0) return aiKB['เช็คอิน'];
+  if(q.indexOf('แพ็ค')>=0||q.indexOf('ราคา')>=0||q.indexOf('package')>=0||q.indexOf('price')>=0) return aiKB['แพ็คเกจ'];
+  if(q.indexOf('เพิ่มลูกค้า')>=0||q.indexOf('add client')>=0||q.indexOf('สมัคร')>=0) return aiKB['เพิ่มลูกค้า'];
+  if(q.indexOf('ยอดขาย')>=0||q.indexOf('sale')>=0||q.indexOf('revenue')>=0||q.indexOf('analytics')>=0||q.indexOf('รายได้')>=0) return aiKB['ยอดขาย'];
+  if(q.indexOf('เพิ่มคลาส')>=0||q.indexOf('add class')>=0||q.indexOf('สร้างคลาส')>=0) return aiKB['เพิ่มคลาส'];
+  if(q.indexOf('ยกเลิก')>=0||q.indexOf('cancel')>=0||q.indexOf('refund')>=0) return aiKB['ยกเลิก'];
+  if(q.indexOf('ตารางสอน')>=0||q.indexOf('schedule')>=0||q.indexOf('view schedule')>=0) return aiKB['ตารางสอน'];
+  if(q.indexOf('ห้อง')>=0||q.indexOf('room')>=0) return aiKB['ห้อง'];
+  if(q.indexOf('hello')>=0||q.indexOf('สวัสดี')>=0||q.indexOf('hi')>=0) return aiKB['default'];
+  return 'ขอโทษค่ะ ฉันยังไม่เข้าใจคำถามนี้ 😅\n\nลองถามเกี่ยวกับ:\n• จองคลาส, เช็คอิน, แพ็คเกจ\n• เพิ่มลูกค้า, ดูยอดขาย\n• ข้อมูลครู, ห้องเรียน\n\nหรือกดปุ่มด่วนด้านล่างได้เลยค่ะ!';
+}
+
+function toggleAI(){document.getElementById('aiP').classList.toggle('show')}
+function sendAI(){
+  var inp=document.getElementById('aiInp');
+  var q=inp.value.trim();if(!q)return;
+  var body=document.getElementById('aiBody');
+  body.innerHTML+='<div class="ai-msg user">'+q+'</div>';
+  inp.value='';
+  body.innerHTML+='<div class="ai-msg typing"><span class="ai-typing-dot"></span><span class="ai-typing-dot"></span><span class="ai-typing-dot"></span></div>';
+  body.scrollTop=body.scrollHeight;
+  setTimeout(function(){
+    body.innerHTML=body.innerHTML.replace(/typing[^<]*/,'');
+    var ans=aiAnswer(q);
+    body.innerHTML+='<div class="ai-msg bot">'+ans.replace(/\n/g,'<br>')+'</div>';
+    body.scrollTop=body.scrollHeight;
+  },800);
+}
+function quickAI(q){
+  document.getElementById('aiInp').value=q;
+  sendAI();
+}
+document.getElementById('aiInp').addEventListener('keydown',function(e){if(e.key==='Enter')sendAI()});
+
+// MODALS
+function openAddClassModal(){document.getElementById('addClassModal').classList.add('show')}
+function closeAddClassModal(){document.getElementById('addClassModal').classList.remove('show')}
+function saveClass(){alert('Class saved!');closeAddClassModal()}
+
+function openAddClientModal(){document.getElementById('addClientModal').classList.add('show')}
+function closeAddClientModal(){document.getElementById('addClientModal').classList.remove('show')}
+function saveClient(){
+  var name=document.getElementById('clientName').value;
+  if(!name){alert('Please enter name');return}
+  var tags=[];
+  if(document.getElementById('tag-vip').checked)tags.push('VIP');
+  if(document.getElementById('tag-new').checked)tags.push('New');
+  if(document.getElementById('tag-lead').checked)tags.push('Lead');
+  if(document.getElementById('tag-regular').checked)tags.push('Regular');
+  if(tags.length===0)tags.push('Regular');
+  var newClient={
+    n:name,
+    e:document.getElementById('clientEmail').value||'—',
+    ph:document.getElementById('clientPhone').value||'—',
+    pk:document.getElementById('clientPackage').value,
+    v:0,
+    tg:tags,
+    l:'—'
+  };
+  CL.push(newClient);
+  rC(CL);
+  alert('Client added successfully!');
+  closeAddClientModal();
+  document.getElementById('clientName').value='';
+  document.getElementById('clientEmail').value='';
+  document.getElementById('clientPhone').value='';
+  document.getElementById('clientLineID').value='';
+  document.getElementById('tag-vip').checked=false;
+  document.getElementById('tag-new').checked=false;
+  document.getElementById('tag-lead').checked=false;
+  document.getElementById('tag-regular').checked=false;
+  document.getElementById('clientPackage').value='—';
+  document.getElementById('clientNotes').value='';
+}
+
+function toggleDashboardCollapse(){alert('Dashboard collapsed')}
+
+// Close modals on background click
+document.getElementById('addClassModal').onclick=function(e){if(e.target===this)closeAddClassModal()}
+document.getElementById('addClientModal').onclick=function(e){if(e.target===this)closeAddClientModal()}
+</script>
+
+<!-- AI ASSISTANT WIDGET -->
+<button class="ai-btn" onclick="toggleAI()" title="AI Assistant">💬</button>
+<div class="ai-panel" id="aiP">
+  <div class="ai-head"><h3>🤖 HOYHON AI Assistant</h3><button class="ai-close" onclick="toggleAI()">×</button></div>
+  <div class="ai-body" id="aiBody">
+    <div class="ai-msg bot">สวัสดีค่ะ! ฉันคือ HOYHON AI Assistant 🤖<br><br>ถามเกี่ยวกับการใช้งานระบบได้เลยค่ะ เช่น วิธีจองคลาส, เช็คอิน, ดูยอดขาย หรือจัดการสมาชิก</div>
+  </div>
+  <div class="ai-quick">
+    <button onclick="quickAI('วิธีจองคลาส')">จองคลาส</button>
+    <button onclick="quickAI('วิธีเช็คอิน')">เช็คอิน</button>
+    <button onclick="quickAI('ดูแพ็คเกจ')">แพ็คเกจ</button>
+    <button onclick="quickAI('เพิ่มลูกค้าใหม่')">เพิ่มลูกค้า</button>
+    <button onclick="quickAI('ดูยอดขาย')">ยอดขาย</button>
+    <button onclick="quickAI('ตารางสอน')">ตารางสอน</button>
+  </div>
+  <div class="ai-input"><input id="aiInp" placeholder="ถามอะไรก็ได้..."><button onclick="sendAI()">ส่ง</button></div>
+</div>
+
+</body>
+</html>
