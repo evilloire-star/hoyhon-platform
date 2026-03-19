@@ -25,7 +25,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
 .nav-item{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;font-size:14px;font-weight:500;color:var(--muted);cursor:pointer;transition:all .15s;margin-bottom:2px}
 .nav-item:hover{background:var(--bg);color:var(--text)}
 .nav-item.active{background:var(--teal-l);color:var(--teal);font-weight:600}
-.nav-item.has-sub::after{content:'›';margin-left:auto;font-size:16px;transition:transform .2s}
+.nav-item.has-sub::after{content:'âº';margin-left:auto;font-size:16px;transition:transform .2s}
 .nav-item.has-sub.open::after{transform:rotate(90deg)}
 .nav-item .ic{width:20px;text-align:center;font-size:16px}
 .nav-sub{display:none;margin-left:12px;padding-left:8px;border-left:2px solid var(--border)}
@@ -180,52 +180,52 @@ tr:hover td{background:#FAFBFC}
   <nav id="nav">
     <!-- MAIN SECTION -->
     <div class="nav-sec">Main</div>
-    <div class="nav-item active" data-page="dashboard"><span class="ic">📊</span> Dashboard</div>
-    <div class="nav-item" data-page="classes"><span class="ic">📅</span> Classes</div>
-    <div class="nav-item" data-page="appointments"><span class="ic">📋</span> Appointments</div>
-    <div class="nav-item" data-page="courses"><span class="ic">📚</span> Courses</div>
-    <div class="nav-item" data-page="rooms"><span class="ic">🏠</span> Rooms</div>
-    <div class="nav-item" data-page="checkin"><span class="ic">✅</span> Check In</div>
+    <div class="nav-item active" data-page="dashboard"><span class="ic">ð</span> Dashboard</div>
+    <div class="nav-item" data-page="classes"><span class="ic">ð</span> Classes</div>
+    <div class="nav-item" data-page="appointments"><span class="ic">ð</span> Appointments</div>
+    <div class="nav-item" data-page="courses"><span class="ic">ð</span> Courses</div>
+    <div class="nav-item" data-page="rooms"><span class="ic">ð </span> Rooms</div>
+    <div class="nav-item" data-page="checkin"><span class="ic">â</span> Check In</div>
 
     <!-- MEMBERS SECTION -->
     <div class="nav-sec">Members</div>
-    <div class="nav-item" data-page="clients"><span class="ic">👥</span> Clients</div>
-    <div class="nav-item" data-page="pos"><span class="ic">🛒</span> Point of Sale</div>
+    <div class="nav-item" data-page="clients"><span class="ic">ð¥</span> Clients</div>
+    <div class="nav-item" data-page="pos"><span class="ic">ð</span> Point of Sale</div>
 
     <!-- INSIGHTS SECTION -->
     <div class="nav-sec">Insights</div>
-    <div class="nav-item has-sub" onclick="toggleSub(event, 'insights-sub')"><span class="ic">📈</span> Insights</div>
+    <div class="nav-item has-sub" onclick="toggleSub(event, 'insights-sub')"><span class="ic">ð</span> Insights</div>
     <div class="nav-sub" id="insights-sub">
-      <div class="nav-item" data-page="insights-reports"><span class="ic">📋</span> Reports</div>
-      <div class="nav-item" data-page="insights-analytics"><span class="ic">📊</span> Analytics</div>
+      <div class="nav-item" data-page="insights-reports"><span class="ic">ð</span> Reports</div>
+      <div class="nav-item" data-page="insights-analytics"><span class="ic">ð</span> Analytics</div>
     </div>
-    <div class="nav-item" data-page="marketing"><span class="ic">📣</span> Marketing</div>
+    <div class="nav-item" data-page="marketing"><span class="ic">ð£</span> Marketing</div>
 
     <!-- MANAGE SECTION -->
     <div class="nav-sec">Manage</div>
-    <div class="nav-item has-sub" onclick="toggleSub(event, 'services-sub')"><span class="ic">🎯</span> Services & Products</div>
+    <div class="nav-item has-sub" onclick="toggleSub(event, 'services-sub')"><span class="ic">ð¯</span> Services & Products</div>
     <div class="nav-sub" id="services-sub">
-      <div class="nav-item" data-page="services-classes"><span class="ic">📅</span> Classes</div>
-      <div class="nav-item" data-page="services-appointments"><span class="ic">📋</span> Appointments</div>
-      <div class="nav-item" data-page="services-courses"><span class="ic">📚</span> Courses</div>
-      <div class="nav-item" data-page="services-retail"><span class="ic">🛍️</span> Retail Products</div>
-      <div class="nav-item" data-page="services-pricing"><span class="ic">💰</span> Pricing</div>
-      <div class="nav-item" data-page="services-arrivals"><span class="ic">📥</span> Arrivals</div>
-      <div class="nav-item" data-page="services-contracts"><span class="ic">📄</span> Contracts</div>
+      <div class="nav-item" data-page="services-classes"><span class="ic">ð</span> Classes</div>
+      <div class="nav-item" data-page="services-appointments"><span class="ic">ð</span> Appointments</div>
+      <div class="nav-item" data-page="services-courses"><span class="ic">ð</span> Courses</div>
+      <div class="nav-item" data-page="services-retail"><span class="ic">ðï¸</span> Retail Products</div>
+      <div class="nav-item" data-page="services-pricing"><span class="ic">ð°</span> Pricing</div>
+      <div class="nav-item" data-page="services-arrivals"><span class="ic">ð¥</span> Arrivals</div>
+      <div class="nav-item" data-page="services-contracts"><span class="ic">ð</span> Contracts</div>
     </div>
-    <div class="nav-item" data-page="staff"><span class="ic">👤</span> Staff</div>
-    <div class="nav-item" data-page="settings"><span class="ic">⚙️</span> Settings</div>
+    <div class="nav-item" data-page="staff"><span class="ic">ð¤</span> Staff</div>
+    <div class="nav-item" data-page="settings"><span class="ic">âï¸</span> Settings</div>
   </nav>
   <div class="sidebar-footer">
     <div id="dbStatus" style="padding:8px 12px"></div>
-    <div class="nav-item" data-page="settings"><span class="ic">✏️</span> Edit</div>
+    <div class="nav-item" data-page="settings"><span class="ic">âï¸</span> Edit</div>
   </div>
 </div>
 
 <div class="main">
   <div class="topbar">
     <div class="topbar-left">
-      <button class="menu-btn" onclick="toggleMenu()">☰</button>
+      <button class="menu-btn" onclick="toggleMenu()">â°</button>
       <div class="logo-icon" style="width:32px;height:32px;font-size:16px">H</div>
     </div>
     <div class="topbar-center">
@@ -235,14 +235,14 @@ tr:hover td{background:#FAFBFC}
       </div>
     </div>
     <div class="topbar-right">
-      <button class="icon-btn" title="Clock">🕐</button>
-      <button class="icon-btn" title="Checkmark">✓</button>
-      <button class="icon-btn" title="Calendar">📅</button>
-      <button class="icon-btn" title="Help">❓</button>
-      <button class="icon-btn" title="Share">📤</button>
+      <button class="icon-btn" title="Clock">ð</button>
+      <button class="icon-btn" title="Checkmark">â</button>
+      <button class="icon-btn" title="Calendar">ð</button>
+      <button class="icon-btn" title="Help">â</button>
+      <button class="icon-btn" title="Share">ð¤</button>
       <button class="avatar-btn">
         <div class="avatar">HC</div>
-        <span>▼</span>
+        <span>â¼</span>
       </button>
     </div>
   </div>
@@ -252,10 +252,10 @@ tr:hover td{background:#FAFBFC}
     <div class="page active" id="p-dashboard">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
         <div><h2 style="font-size:22px;font-weight:700">Welcome, HOYHON!</h2></div>
-        <button class="card-collapse" onclick="toggleDashboardCollapse()">Collapse ▲</button>
+        <button class="card-collapse" onclick="toggleDashboardCollapse()">Collapse â²</button>
       </div>
       <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
-        <span style="font-size:13px;color:var(--muted)">Insights snapshot · </span>
+        <span style="font-size:13px;color:var(--muted)">Insights snapshot Â· </span>
         <select class="filter-select" id="dateFilter"><option>This month to yesterday</option><option>Last 7 days</option><option>Last 30 days</option></select>
         <select class="filter-select"><option>All Locations</option><option>HOYHON CIRCUS</option><option>HOYHON Park - Silom</option></select>
       </div>
@@ -264,13 +264,13 @@ tr:hover td{background:#FAFBFC}
         <button class="tab-btn">At Time of Sale</button>
       </div>
       <div class="kpi-grid">
-        <div class="kpi-card"><div class="lb">Total Net Sales (BHT)</div><div class="vl">414,573</div><div class="ch">↑ 49.0% vs Prev Year</div></div>
-        <div class="kpi-card"><div class="lb">Total Visits</div><div class="vl">730</div><div class="ch">↑ 57.3% vs Prev Year</div></div>
-        <div class="kpi-card"><div class="lb">Active Members</div><div class="vl">156</div><div class="ch">↑ 1.3% Mar 17 vs Mar 16</div></div>
+        <div class="kpi-card"><div class="lb">Total Net Sales (BHT)</div><div class="vl">414,573</div><div class="ch">â 49.0% vs Prev Year</div></div>
+        <div class="kpi-card"><div class="lb">Total Visits</div><div class="vl">730</div><div class="ch">â 57.3% vs Prev Year</div></div>
+        <div class="kpi-card"><div class="lb">Active Members</div><div class="vl">156</div><div class="ch">â 1.3% Mar 17 vs Mar 16</div></div>
       </div>
       <div class="insights-banner">
         <div><h3>Get business insights</h3></div>
-        <button class="btn" style="background:none;padding:0;font-size:12px;color:#047857;text-decoration:underline;cursor:pointer;font-weight:600" onclick="goToPage('insights-analytics')">Go to Analytics 2.0 →</button>
+        <button class="btn" style="background:none;padding:0;font-size:12px;color:#047857;text-decoration:underline;cursor:pointer;font-weight:600" onclick="goToPage('insights-analytics')">Go to Analytics 2.0 â</button>
       </div>
       <div style="display:grid;grid-template-columns:1fr 300px;gap:16px">
         <div class="card">
@@ -291,10 +291,10 @@ tr:hover td{background:#FAFBFC}
     <div class="page" id="p-classes">
       <div class="toolbar">
         <div style="display:flex;align-items:center;gap:8px">
-          <button class="btn btn-s">‹</button>
+          <button class="btn btn-s">â¹</button>
           <button class="btn btn-s btn-p">Today</button>
-          <button class="btn btn-s">›</button>
-          <span style="font-size:14px;font-weight:600;margin-left:8px">18 – 24 March 2026</span>
+          <button class="btn btn-s">âº</button>
+          <span style="font-size:14px;font-weight:600;margin-left:8px">18 â 24 March 2026</span>
         </div>
         <div style="display:flex;gap:6px">
           <button class="btn btn-s">Day</button>
@@ -312,7 +312,7 @@ tr:hover td{background:#FAFBFC}
       </div>
       <div class="card">
         <table>
-          <thead><tr><th>Status</th><th>Class</th><th>Teacher</th><th style="width:30px">✓</th><th>Assistant</th><th>Location</th><th>Room</th><th></th></tr></thead>
+          <thead><tr><th>Status</th><th>Class</th><th>Teacher</th><th style="width:30px">â</th><th>Assistant</th><th>Location</th><th>Room</th><th></th></tr></thead>
           <tbody id="classesBody"></tbody>
         </table>
       </div>
@@ -353,14 +353,14 @@ tr:hover td{background:#FAFBFC}
       </div>
       <div style="margin-bottom:16px">
         <label style="font-size:12px;color:var(--muted);font-weight:600;text-transform:uppercase;margin-bottom:8px;display:block">Select Class</label>
-        <select class="filter-select" style="width:280px"><option>Stretch RCA (Begin/PM) — 13:30 - 14:30</option><option>Hammock RCA (All level/EVN) — 18:00 - 19:00</option></select>
+        <select class="filter-select" style="width:280px"><option>Stretch RCA (Begin/PM) â 13:30 - 14:30</option><option>Hammock RCA (All level/EVN) â 18:00 - 19:00</option></select>
       </div>
-      <button class="btn btn-p" style="margin-bottom:16px">📷 Scan QR Code</button>
+      <button class="btn btn-p" style="margin-bottom:16px">ð· Scan QR Code</button>
       <div class="cih">
         <div>
           <div style="font-size:11px;font-weight:600;color:var(--teal);text-transform:uppercase;letter-spacing:.5px">Current Class</div>
           <h2>Stretch RCA (Begin/PM)</h2>
-          <p>13:30 – 14:30 · Yak · Wall Bar 1</p>
+          <p>13:30 â 14:30 Â· Yak Â· Wall Bar 1</p>
         </div>
         <div class="cis">
           <div><div class="n" style="color:var(--green)" id="ciC">2</div><div class="l">Checked In</div></div>
@@ -396,9 +396,9 @@ tr:hover td{background:#FAFBFC}
           <table>
             <thead><tr><th>Product</th><th>Price</th><th>Qty</th><th></th></tr></thead>
             <tbody id="posProducts">
-              <tr><td>Monthly Unlimited</td><td>฿5,900</td><td><input type="number" min="0" style="width:50px;padding:4px"></td><td><button class="btn btn-s btn-p">Add</button></td></tr>
-              <tr><td>10 Class Pack</td><td>฿4,500</td><td><input type="number" min="0" style="width:50px;padding:4px"></td><td><button class="btn btn-s btn-p">Add</button></td></tr>
-              <tr><td>Trial 3 Classes</td><td>฿990</td><td><input type="number" min="0" style="width:50px;padding:4px"></td><td><button class="btn btn-s btn-p">Add</button></td></tr>
+              <tr><td>Monthly Unlimited</td><td>à¸¿5,900</td><td><input type="number" min="0" style="width:50px;padding:4px"></td><td><button class="btn btn-s btn-p">Add</button></td></tr>
+              <tr><td>10 Class Pack</td><td>à¸¿4,500</td><td><input type="number" min="0" style="width:50px;padding:4px"></td><td><button class="btn btn-s btn-p">Add</button></td></tr>
+              <tr><td>Trial 3 Classes</td><td>à¸¿990</td><td><input type="number" min="0" style="width:50px;padding:4px"></td><td><button class="btn btn-s btn-p">Add</button></td></tr>
             </tbody>
           </table>
         </div>
@@ -425,9 +425,9 @@ tr:hover td{background:#FAFBFC}
         <h2 style="font-size:18px;font-weight:700">Analytics 2.0</h2>
       </div>
       <div class="kpi-grid" style="margin-bottom:20px">
-        <div class="kpi-card"><div class="lb">Total Net Sales (BHT)</div><div class="vl">414,573</div><div class="ch">↑ 49.0% vs Prev Year</div></div>
-        <div class="kpi-card"><div class="lb">Total Visits</div><div class="vl">730</div><div class="ch">↑ 57.3% vs Prev Year</div></div>
-        <div class="kpi-card"><div class="lb">Active Members</div><div class="vl">156</div><div class="ch">↑ 1.3% Mar 17 vs Mar 16</div></div>
+        <div class="kpi-card"><div class="lb">Total Net Sales (BHT)</div><div class="vl">414,573</div><div class="ch">â 49.0% vs Prev Year</div></div>
+        <div class="kpi-card"><div class="lb">Total Visits</div><div class="vl">730</div><div class="ch">â 57.3% vs Prev Year</div></div>
+        <div class="kpi-card"><div class="lb">Active Members</div><div class="vl">156</div><div class="ch">â 1.3% Mar 17 vs Mar 16</div></div>
       </div>
       <div style="margin-bottom:20px">
         <input class="search" placeholder="Search dashboards..." style="width:320px">
@@ -435,27 +435,27 @@ tr:hover td{background:#FAFBFC}
       <div style="margin-bottom:20px">
         <h3 style="font-size:14px;font-weight:700;margin-bottom:12px">Your Favorite Dashboards</h3>
         <div class="dg" style="grid-template-columns:repeat(4,1fr)">
-          <div class="dc"><div class="di">📊</div><div class="dn">Visits</div><div class="dd">Class visits & trends</div></div>
-          <div class="dc"><div class="di">💰</div><div class="dn">Sales</div><div class="dd">Revenue overview</div></div>
-          <div class="dc"><div class="di">👥</div><div class="dn">Memberships</div><div class="dd">Active & new members</div></div>
-          <div class="dc"><div class="di">📅</div><div class="dn">Classes</div><div class="dd">Class scheduling</div></div>
+          <div class="dc"><div class="di">ð</div><div class="dn">Visits</div><div class="dd">Class visits & trends</div></div>
+          <div class="dc"><div class="di">ð°</div><div class="dn">Sales</div><div class="dd">Revenue overview</div></div>
+          <div class="dc"><div class="di">ð¥</div><div class="dn">Memberships</div><div class="dd">Active & new members</div></div>
+          <div class="dc"><div class="di">ð</div><div class="dn">Classes</div><div class="dd">Class scheduling</div></div>
         </div>
       </div>
       <div style="margin-bottom:20px">
         <h3 style="font-size:14px;font-weight:700;margin-bottom:12px">All Dashboards</h3>
         <div class="dg">
-          <div class="dc"><div class="di">📊</div><div class="dn">Overview</div></div>
-          <div class="dc"><div class="di">💰</div><div class="dn">Sales</div></div>
-          <div class="dc"><div class="di">👥</div><div class="dn">Visits</div></div>
-          <div class="dc"><div class="di">💳</div><div class="dn">Memberships</div></div>
-          <div class="dc"><div class="di">⭐</div><div class="dn">Weekly AI Insights<span class="badge">Beta</span></div></div>
-          <div class="dc"><div class="di">📅</div><div class="dn">Classes</div></div>
-          <div class="dc"><div class="di">📋</div><div class="dn">Appointments</div></div>
-          <div class="dc"><div class="di">🎟️</div><div class="dn">ClassPass</div></div>
-          <div class="dc"><div class="di">👥</div><div class="dn">Clients</div></div>
-          <div class="dc"><div class="di">💵</div><div class="dn">Payments</div></div>
-          <div class="dc"><div class="di">🔄</div><div class="dn">Autopay</div></div>
-          <div class="dc"><div class="di">📊</div><div class="dn">More...</div></div>
+          <div class="dc"><div class="di">ð</div><div class="dn">Overview</div></div>
+          <div class="dc"><div class="di">ð°</div><div class="dn">Sales</div></div>
+          <div class="dc"><div class="di">ð¥</div><div class="dn">Visits</div></div>
+          <div class="dc"><div class="di">ð³</div><div class="dn">Memberships</div></div>
+          <div class="dc"><div class="di">â­</div><div class="dn">Weekly AI Insights<span class="badge">Beta</span></div></div>
+          <div class="dc"><div class="di">ð</div><div class="dn">Classes</div></div>
+          <div class="dc"><div class="di">ð</div><div class="dn">Appointments</div></div>
+          <div class="dc"><div class="di">ðï¸</div><div class="dn">ClassPass</div></div>
+          <div class="dc"><div class="di">ð¥</div><div class="dn">Clients</div></div>
+          <div class="dc"><div class="di">ðµ</div><div class="dn">Payments</div></div>
+          <div class="dc"><div class="di">ð</div><div class="dn">Autopay</div></div>
+          <div class="dc"><div class="di">ð</div><div class="dn">More...</div></div>
         </div>
       </div>
     </div>
@@ -500,12 +500,12 @@ tr:hover td{background:#FAFBFC}
         <table>
           <thead><tr><th>Name</th><th>Duration</th><th>Price</th><th>Staff</th><th>Status</th></tr></thead>
           <tbody>
-            <tr><td style="font-weight:600">Private Aerial Silk</td><td>60 min</td><td>฿2,500</td><td>All Instructors</td><td><span class="bd b-open">Active</span></td></tr>
-            <tr><td style="font-weight:600">Private Pole</td><td>60 min</td><td>฿2,500</td><td>Pom</td><td><span class="bd b-open">Active</span></td></tr>
-            <tr><td style="font-weight:600">Private Handstand</td><td>60 min</td><td>฿2,500</td><td>Joh</td><td><span class="bd b-open">Active</span></td></tr>
-            <tr><td style="font-weight:600">Duo Private Session</td><td>60 min</td><td>฿3,500</td><td>All Instructors</td><td><span class="bd b-open">Active</span></td></tr>
-            <tr><td style="font-weight:600">Performance Choreography</td><td>90 min</td><td>฿5,000</td><td>Joh, Art, Nassanun</td><td><span class="bd b-open">Active</span></td></tr>
-            <tr><td style="font-weight:600">Body Assessment</td><td>30 min</td><td>฿500</td><td>All Instructors</td><td><span class="bd b-open">Active</span></td></tr>
+            <tr><td style="font-weight:600">Private Aerial Silk</td><td>60 min</td><td>à¸¿2,500</td><td>All Instructors</td><td><span class="bd b-open">Active</span></td></tr>
+            <tr><td style="font-weight:600">Private Pole</td><td>60 min</td><td>à¸¿2,500</td><td>Pom</td><td><span class="bd b-open">Active</span></td></tr>
+            <tr><td style="font-weight:600">Private Handstand</td><td>60 min</td><td>à¸¿2,500</td><td>Joh</td><td><span class="bd b-open">Active</span></td></tr>
+            <tr><td style="font-weight:600">Duo Private Session</td><td>60 min</td><td>à¸¿3,500</td><td>All Instructors</td><td><span class="bd b-open">Active</span></td></tr>
+            <tr><td style="font-weight:600">Performance Choreography</td><td>90 min</td><td>à¸¿5,000</td><td>Joh, Art, Nassanun</td><td><span class="bd b-open">Active</span></td></tr>
+            <tr><td style="font-weight:600">Body Assessment</td><td>30 min</td><td>à¸¿500</td><td>All Instructors</td><td><span class="bd b-open">Active</span></td></tr>
           </tbody>
         </table>
       </div>
@@ -518,12 +518,12 @@ tr:hover td{background:#FAFBFC}
         <table>
           <thead><tr><th>Course</th><th>Duration</th><th>Sessions</th><th>Price</th><th>Capacity</th><th>Status</th></tr></thead>
           <tbody>
-            <tr><td style="font-weight:600">Aerial Silk Teacher Training</td><td>5 days</td><td>10 sessions (40 hrs)</td><td>฿35,000</td><td>8</td><td><span class="bd b-open">Open</span></td></tr>
-            <tr><td style="font-weight:600">Aerial Hoop Teacher Training</td><td>5 days</td><td>10 sessions (40 hrs)</td><td>฿35,000</td><td>8</td><td><span class="bd b-open">Open</span></td></tr>
-            <tr><td style="font-weight:600">Handstand Fundamentals Workshop</td><td>2 days</td><td>4 sessions (8 hrs)</td><td>฿8,900</td><td>12</td><td><span class="bd b-alm">Almost Full</span></td></tr>
-            <tr><td style="font-weight:600">Aerial Fundamentals (Beginners)</td><td>5 days</td><td>5 sessions (10 hrs)</td><td>฿12,900</td><td>10</td><td><span class="bd b-open">Open</span></td></tr>
-            <tr><td style="font-weight:600">Flexibility Intensive</td><td>3 days</td><td>6 sessions (12 hrs)</td><td>฿6,500</td><td>8</td><td><span class="bd b-open">Open</span></td></tr>
-            <tr><td style="font-weight:600">Performance Creation Lab</td><td>10 days</td><td>20 sessions (60 hrs)</td><td>฿45,000</td><td>6</td><td><span class="bd b-lead">Coming Soon</span></td></tr>
+            <tr><td style="font-weight:600">Aerial Silk Teacher Training</td><td>5 days</td><td>10 sessions (40 hrs)</td><td>à¸¿35,000</td><td>8</td><td><span class="bd b-open">Open</span></td></tr>
+            <tr><td style="font-weight:600">Aerial Hoop Teacher Training</td><td>5 days</td><td>10 sessions (40 hrs)</td><td>à¸¿35,000</td><td>8</td><td><span class="bd b-open">Open</span></td></tr>
+            <tr><td style="font-weight:600">Handstand Fundamentals Workshop</td><td>2 days</td><td>4 sessions (8 hrs)</td><td>à¸¿8,900</td><td>12</td><td><span class="bd b-alm">Almost Full</span></td></tr>
+            <tr><td style="font-weight:600">Aerial Fundamentals (Beginners)</td><td>5 days</td><td>5 sessions (10 hrs)</td><td>à¸¿12,900</td><td>10</td><td><span class="bd b-open">Open</span></td></tr>
+            <tr><td style="font-weight:600">Flexibility Intensive</td><td>3 days</td><td>6 sessions (12 hrs)</td><td>à¸¿6,500</td><td>8</td><td><span class="bd b-open">Open</span></td></tr>
+            <tr><td style="font-weight:600">Performance Creation Lab</td><td>10 days</td><td>20 sessions (60 hrs)</td><td>à¸¿45,000</td><td>6</td><td><span class="bd b-lead">Coming Soon</span></td></tr>
           </tbody>
         </table>
       </div>
@@ -536,14 +536,14 @@ tr:hover td{background:#FAFBFC}
         <table>
           <thead><tr><th>Product</th><th>Category</th><th>Price</th><th>Stock</th><th>Status</th></tr></thead>
           <tbody>
-            <tr><td style="font-weight:600">Aerial Grip (Dry Hands)</td><td>Accessories</td><td>฿450</td><td>25</td><td><span class="bd b-open">In Stock</span></td></tr>
-            <tr><td style="font-weight:600">HOYHON Tank Top</td><td>Apparel</td><td>฿690</td><td>18</td><td><span class="bd b-open">In Stock</span></td></tr>
-            <tr><td style="font-weight:600">HOYHON Leggings</td><td>Apparel</td><td>฿990</td><td>12</td><td><span class="bd b-open">In Stock</span></td></tr>
-            <tr><td style="font-weight:600">Aerial Silk (Practice)</td><td>Equipment</td><td>฿3,500</td><td>5</td><td><span class="bd b-alm">Low Stock</span></td></tr>
-            <tr><td style="font-weight:600">Grip Tape Roll</td><td>Accessories</td><td>฿280</td><td>30</td><td><span class="bd b-open">In Stock</span></td></tr>
-            <tr><td style="font-weight:600">Pole Grip Spray</td><td>Accessories</td><td>฿550</td><td>15</td><td><span class="bd b-open">In Stock</span></td></tr>
-            <tr><td style="font-weight:600">HOYHON Water Bottle</td><td>Merch</td><td>฿390</td><td>0</td><td><span class="bd b-full">Out of Stock</span></td></tr>
-            <tr><td style="font-weight:600">Wrist Support Wrap</td><td>Accessories</td><td>฿350</td><td>20</td><td><span class="bd b-open">In Stock</span></td></tr>
+            <tr><td style="font-weight:600">Aerial Grip (Dry Hands)</td><td>Accessories</td><td>à¸¿450</td><td>25</td><td><span class="bd b-open">In Stock</span></td></tr>
+            <tr><td style="font-weight:600">HOYHON Tank Top</td><td>Apparel</td><td>à¸¿690</td><td>18</td><td><span class="bd b-open">In Stock</span></td></tr>
+            <tr><td style="font-weight:600">HOYHON Leggings</td><td>Apparel</td><td>à¸¿990</td><td>12</td><td><span class="bd b-open">In Stock</span></td></tr>
+            <tr><td style="font-weight:600">Aerial Silk (Practice)</td><td>Equipment</td><td>à¸¿3,500</td><td>5</td><td><span class="bd b-alm">Low Stock</span></td></tr>
+            <tr><td style="font-weight:600">Grip Tape Roll</td><td>Accessories</td><td>à¸¿280</td><td>30</td><td><span class="bd b-open">In Stock</span></td></tr>
+            <tr><td style="font-weight:600">Pole Grip Spray</td><td>Accessories</td><td>à¸¿550</td><td>15</td><td><span class="bd b-open">In Stock</span></td></tr>
+            <tr><td style="font-weight:600">HOYHON Water Bottle</td><td>Merch</td><td>à¸¿390</td><td>0</td><td><span class="bd b-full">Out of Stock</span></td></tr>
+            <tr><td style="font-weight:600">Wrist Support Wrap</td><td>Accessories</td><td>à¸¿350</td><td>20</td><td><span class="bd b-open">In Stock</span></td></tr>
           </tbody>
         </table>
       </div>
@@ -557,16 +557,16 @@ tr:hover td{background:#FAFBFC}
         <select class="filter-select"><option>Today</option><option>This Week</option><option>This Month</option></select>
       </div>
       <div class="card">
-        <div class="card-h"><h2>Today's Arrivals — 19 March 2026</h2></div>
+        <div class="card-h"><h2>Today's Arrivals â 19 March 2026</h2></div>
         <table>
           <thead><tr><th>Time</th><th>Client</th><th>Type</th><th>Class/Service</th><th>Status</th></tr></thead>
           <tbody>
             <tr><td>09:05</td><td><div class="cr"><div class="ca">AP</div><span style="font-weight:600">Anne Poonnika</span></div></td><td>Class</td><td>Move Barre (Beg/AM)</td><td><span class="bd b-open">Checked In</span></td></tr>
             <tr><td>09:58</td><td><div class="cr"><div class="ca">MR</div><span style="font-weight:600">Marco Rossi</span></div></td><td>Class</td><td>Aerial Silk (Begin/AM)</td><td><span class="bd b-open">Checked In</span></td></tr>
             <tr><td>10:02</td><td><div class="cr"><div class="ca">SC</div><span style="font-weight:600">Sofie Carlsen</span></div></td><td>Class</td><td>Aerial Silk (Begin/AM)</td><td><span class="bd b-open">Checked In</span></td></tr>
-            <tr><td>—</td><td><div class="cr"><div class="ca">DC</div><span style="font-weight:600">David Chen</span></div></td><td>Class</td><td>Hammock Kids (17:00)</td><td><span class="bd b-alm">Upcoming</span></td></tr>
-            <tr><td>—</td><td><div class="cr"><div class="ca">JW</div><span style="font-weight:600">James Wilson</span></div></td><td>Class</td><td>Aerial Hammock (18:00)</td><td><span class="bd b-alm">Upcoming</span></td></tr>
-            <tr><td>—</td><td><div class="cr"><div class="ca">PS</div><span style="font-weight:600">Ploy Siriporn</span></div></td><td>Appointment</td><td>Private Aerial Silk (18:30)</td><td><span class="bd b-alm">Upcoming</span></td></tr>
+            <tr><td>â</td><td><div class="cr"><div class="ca">DC</div><span style="font-weight:600">David Chen</span></div></td><td>Class</td><td>Hammock Kids (17:00)</td><td><span class="bd b-alm">Upcoming</span></td></tr>
+            <tr><td>â</td><td><div class="cr"><div class="ca">JW</div><span style="font-weight:600">James Wilson</span></div></td><td>Class</td><td>Aerial Hammock (18:00)</td><td><span class="bd b-alm">Upcoming</span></td></tr>
+            <tr><td>â</td><td><div class="cr"><div class="ca">PS</div><span style="font-weight:600">Ploy Siriporn</span></div></td><td>Appointment</td><td>Private Aerial Silk (18:30)</td><td><span class="bd b-alm">Upcoming</span></td></tr>
           </tbody>
         </table>
       </div>
@@ -623,7 +623,7 @@ tr:hover td{background:#FAFBFC}
         <div class="sg">
           <h3>Billing</h3>
           <label>Current Plan</label>
-          <select><option>Professional Studio - ฿5,900/mo</option></select>
+          <select><option>Professional Studio - à¸¿5,900/mo</option></select>
           <label>Billing Cycle</label>
           <input value="Monthly" readonly>
           <button class="btn">Manage Billing</button>
@@ -638,7 +638,7 @@ tr:hover td{background:#FAFBFC}
 <!-- ADD CLASS MODAL -->
 <div class="modal-bg" id="addClassModal">
   <div class="modal">
-    <button class="close-btn" onclick="closeAddClassModal()">×</button>
+    <button class="close-btn" onclick="closeAddClassModal()">Ã</button>
     <h2>Add New Class</h2>
     <label>Class Type</label>
     <select id="classTypeSelect">
@@ -702,7 +702,7 @@ tr:hover td{background:#FAFBFC}
 <!-- ADD CLIENT MODAL -->
 <div class="modal-bg" id="addClientModal">
   <div class="modal">
-    <button class="close-btn" onclick="closeAddClientModal()">×</button>
+    <button class="close-btn" onclick="closeAddClientModal()">Ã</button>
     <h2>Add New Client</h2>
     <label>Full Name</label>
     <input id="clientName" placeholder="Enter full name">
@@ -733,7 +733,7 @@ tr:hover td{background:#FAFBFC}
     </div>
     <label>Package</label>
     <select id="clientPackage">
-      <option>—</option>
+      <option>â</option>
       <option>Trial 3 Classes</option>
       <option>10 Class Pack</option>
       <option>20 Class Pack</option>
@@ -774,9 +774,9 @@ try {
   if (window.supabase) {
     sb = window.supabase.createClient(SB_URL, SB_KEY);
     dbMode = true;
-    console.log('✅ Supabase connected');
+    console.log('â Supabase connected');
   }
-} catch(e) { console.log('⚠️ Supabase not available, using mock data'); }
+} catch(e) { console.log('â ï¸ Supabase not available, using mock data'); }
 
 // ===== SUPABASE CRUD FUNCTIONS =====
 async function dbLoadClasses() {
@@ -879,8 +879,8 @@ async function dbSearchClients(q) {
 function showDbStatus() {
   var el = document.getElementById('dbStatus');
   if (el) el.innerHTML = dbMode ?
-    '<span style="color:var(--green);font-size:11px;font-weight:600">● Connected to Supabase</span>' :
-    '<span style="color:var(--yellow);font-size:11px;font-weight:600">● Demo Mode (mock data)</span>';
+    '<span style="color:var(--green);font-size:11px;font-weight:600">â Connected to Supabase</span>' :
+    '<span style="color:var(--yellow);font-size:11px;font-weight:600">â Demo Mode (mock data)</span>';
 }
 
 // ===== TRY LOAD REAL DATA ON START =====
@@ -892,26 +892,26 @@ async function initData() {
     var realLocations = await dbLoadLocations();
 
     if (realClassTypes && realClassTypes.length > 0) {
-      console.log('📊 Loaded', realClassTypes.length, 'class types from Supabase');
+      console.log('ð Loaded', realClassTypes.length, 'class types from Supabase');
       var h='';
       realClassTypes.forEach(function(s){
-        h+='<tr><td style="font-weight:600">'+s.name+'</td><td>'+(s.category||'—')+'</td><td>'+(s.duration_minutes||60)+' min</td><td>'+(s.default_capacity||10)+'</td><td><span class="bd b-open">'+(s.level||'all')+'</span></td></tr>';
+        h+='<tr><td style="font-weight:600">'+s.name+'</td><td>'+(s.category||'â')+'</td><td>'+(s.duration_minutes||60)+' min</td><td>'+(s.default_capacity||10)+'</td><td><span class="bd b-open">'+(s.level||'all')+'</span></td></tr>';
       });
       if (document.getElementById('scB')) var _el=document.getElementById('scB');if(_el)_el.innerHTML= h;
     }
 
     if (realPackages && realPackages.length > 0) {
-      console.log('📦 Loaded', realPackages.length, 'packages from Supabase');
+      console.log('ð¦ Loaded', realPackages.length, 'packages from Supabase');
       var h='';
       realPackages.forEach(function(p){
         var tp = p.type === 'unlimited' ? 'Unlimited' : 'Credits';
-        h+='<div class="pc"><div class="pn">'+p.name+'</div><div class="pp">฿'+Number(p.price).toLocaleString()+'</div><div class="bd '+(tp==='Unlimited'?'b-vip':'b-new')+'" style="margin-bottom:8px">'+tp+'</div><div class="pd">'+(p.credits ? p.credits+' classes · ' : 'Unlimited · ')+(p.duration_days||30)+' days</div></div>';
+        h+='<div class="pc"><div class="pn">'+p.name+'</div><div class="pp">à¸¿'+Number(p.price).toLocaleString()+'</div><div class="bd '+(tp==='Unlimited'?'b-vip':'b-new')+'" style="margin-bottom:8px">'+tp+'</div><div class="pd">'+(p.credits ? p.credits+' classes Â· ' : 'Unlimited Â· ')+(p.duration_days||30)+' days</div></div>';
       });
       if (document.getElementById('spG')) var _el=document.getElementById('spG');if(_el)_el.innerHTML= h;
     }
 
     if (realRooms && realRooms.length > 0) {
-      console.log('🏠 Loaded', realRooms.length, 'rooms from Supabase');
+      console.log('ð  Loaded', realRooms.length, 'rooms from Supabase');
     }
   }
   showDbStatus();
@@ -922,10 +922,10 @@ setTimeout(initData, 500);
 // DATA
 var S=[{t:"10:00",n:"Body Lab (Pilates/Beg/PM)",te:"Succo",r:"PSL LOGO Room 2",b:2,c:6},{t:"13:30",n:"Stretch RCA (Begin/PM)",te:"Yak",r:"Wall Bar 1",b:5,c:6},{t:"18:00",n:"Hammock RCA (All level/EVN)",te:"Atom",r:"GYM 1 Sling Motor",b:3,c:10},{t:"18:30",n:"Stretch RCA (Begin/PM)",te:"Yak",r:"Wall Bar 1",b:6,c:6},{t:"18:00",n:"Pilates Burn (Beg/EVN)",te:"Donut",r:"Pilates Room",b:10,c:10},{t:"19:30",n:"Hoop RCA (Begin/EVN)",te:"Atom",r:"GYM 1 Sling Motor",b:6,c:10}];
 var W=[{d:"Tue",dt:18,tod:1,cl:[{t:"10:00",n:"Body Lab",co:"#60A5FA",i:"Succo",b:2,c:6},{t:"13:30",n:"Stretch RCA",co:"#34D399",i:"Yak",b:5,c:6},{t:"18:00",n:"Hammock RCA",co:"#2DD4BF",i:"Atom",b:3,c:10},{t:"18:00",n:"Pilates Burn",co:"#60A5FA",i:"Donut",b:10,c:10},{t:"19:30",n:"Hoop RCA",co:"#F472B6",i:"Atom",b:6,c:10}]},{d:"Wed",dt:19,cl:[{t:"11:00",n:"Hoop RCA",co:"#F472B6",i:"Pitch",b:3,c:10},{t:"18:00",n:"Handstand",co:"#FBBF24",i:"Joh",b:6,c:8},{t:"18:30",n:"Silk RCA",co:"#F87171",i:"Nassanun",b:4,c:10},{t:"19:30",n:"Hammock RCA",co:"#2DD4BF",i:"Nassanun",b:4,c:10}]},{d:"Thu",dt:20,cl:[{t:"13:00",n:"Cube",co:"#A78BFA",i:"Kao",b:1,c:6},{t:"16:30",n:"Pole Spinning",co:"#818CF8",i:"Pom",b:0,c:8},{t:"18:00",n:"Silk RCA",co:"#F87171",i:"Art",b:5,c:10},{t:"19:00",n:"Strap",co:"#9B72CF",i:"Art",b:1,c:10}]},{d:"Fri",dt:21,cl:[{t:"11:00",n:"Hoop RCA",co:"#F472B6",i:"Atom",b:3,c:10},{t:"14:00",n:"Stretch RCA",co:"#34D399",i:"Yak",b:1,c:6},{t:"17:00",n:"Trapeze",co:"#FB923C",i:"Pitch",b:0,c:10}]},{d:"Sat",dt:22,cl:[{t:"10:00",n:"Pilates",co:"#60A5FA",i:"Succo",b:6,c:6},{t:"13:30",n:"Stretch RCA",co:"#34D399",i:"Yak",b:5,c:6},{t:"18:00",n:"Pilates Burn",co:"#60A5FA",i:"Donut",b:10,c:10},{t:"19:30",n:"Hoop RCA",co:"#F472B6",i:"Atom",b:6,c:10}]},{d:"Sun",dt:23,cl:[{t:"10:00",n:"Barre",co:"#E879F9",i:"Mint",b:4,c:8},{t:"13:00",n:"Silk RCA",co:"#F87171",i:"Nassanun",b:3,c:10},{t:"18:00",n:"Pole",co:"#818CF8",i:"Pom",b:7,c:8}]},{d:"Mon",dt:24,cl:[{t:"10:00",n:"Hoop RCA",co:"#F472B6",i:"Pitch",b:2,c:10},{t:"18:00",n:"Handstand",co:"#FBBF24",i:"Joh",b:5,c:8},{t:"19:00",n:"Silk RCA",co:"#F87171",i:"Nassanun",b:8,c:10}]}];
-var CL=[{n:"Anne Poonnika",e:"anne.p@gmail.com",ph:"089-xxx-xxxx",pk:"Monthly Unlimited",v:42,tg:["VIP","Regular"],l:"17 Mar"},{n:"Tatsapon J.",e:"tatsapon.j@gmail.com",ph:"091-xxx-xxxx",pk:"10 Class Pack",v:28,tg:["New"],l:"15 Mar"},{n:"Sofie Carlsen",e:"sofie.c@outlook.com",ph:"065-xxx-xxxx",pk:"Monthly Unlimited",v:15,tg:["Regular"],l:"18 Mar"},{n:"Pim Suwannarat",e:"pim.s@gmail.com",ph:"082-xxx-xxxx",pk:"10 Class Pack",v:8,tg:["At-Risk"],l:"10 Mar"},{n:"Marco Rossi",e:"marco.r@gmail.com",ph:"093-xxx-xxxx",pk:"Annual Pass",v:55,tg:["VIP","Regular"],l:"18 Mar"},{n:"Kannika Wongchai",e:"kannika.w@yahoo.com",ph:"086-xxx-xxxx",pk:"Trial 3 Classes",v:3,tg:["New","At-Risk"],l:"28 Feb"},{n:"David Chen",e:"david.c@gmail.com",ph:"097-xxx-xxxx",pk:"10 Class Pack",v:19,tg:["Regular"],l:"16 Mar"},{n:"Nattaya Pinket",e:"nattaya.p@gmail.com",ph:"088-xxx-xxxx",pk:"—",v:0,tg:["Lead"],l:"—"},{n:"James Wilson",e:"james.w@gmail.com",ph:"094-xxx-xxxx",pk:"Monthly Unlimited",v:35,tg:["VIP"],l:"18 Mar"},{n:"Ploy Siriporn",e:"ploy.s@gmail.com",ph:"081-xxx-xxxx",pk:"20 Class Pack",v:12,tg:["Regular"],l:"14 Mar"}];
+var CL=[{n:"Anne Poonnika",e:"anne.p@gmail.com",ph:"089-xxx-xxxx",pk:"Monthly Unlimited",v:42,tg:["VIP","Regular"],l:"17 Mar"},{n:"Tatsapon J.",e:"tatsapon.j@gmail.com",ph:"091-xxx-xxxx",pk:"10 Class Pack",v:28,tg:["New"],l:"15 Mar"},{n:"Sofie Carlsen",e:"sofie.c@outlook.com",ph:"065-xxx-xxxx",pk:"Monthly Unlimited",v:15,tg:["Regular"],l:"18 Mar"},{n:"Pim Suwannarat",e:"pim.s@gmail.com",ph:"082-xxx-xxxx",pk:"10 Class Pack",v:8,tg:["At-Risk"],l:"10 Mar"},{n:"Marco Rossi",e:"marco.r@gmail.com",ph:"093-xxx-xxxx",pk:"Annual Pass",v:55,tg:["VIP","Regular"],l:"18 Mar"},{n:"Kannika Wongchai",e:"kannika.w@yahoo.com",ph:"086-xxx-xxxx",pk:"Trial 3 Classes",v:3,tg:["New","At-Risk"],l:"28 Feb"},{n:"David Chen",e:"david.c@gmail.com",ph:"097-xxx-xxxx",pk:"10 Class Pack",v:19,tg:["Regular"],l:"16 Mar"},{n:"Nattaya Pinket",e:"nattaya.p@gmail.com",ph:"088-xxx-xxxx",pk:"â",v:0,tg:["Lead"],l:"â"},{n:"James Wilson",e:"james.w@gmail.com",ph:"094-xxx-xxxx",pk:"Monthly Unlimited",v:35,tg:["VIP"],l:"18 Mar"},{n:"Ploy Siriporn",e:"ploy.s@gmail.com",ph:"081-xxx-xxxx",pk:"20 Class Pack",v:12,tg:["Regular"],l:"14 Mar"}];
 var CI=[{n:"Anne Poonnika",pk:"Monthly Unlimited",dn:true,tm:"13:22"},{n:"Sofie Carlsen",pk:"Monthly Unlimited",dn:true,tm:"13:25"},{n:"David Chen",pk:"10 Class Pack (7 left)",dn:false,tm:null},{n:"Marco Rossi",pk:"Annual Pass",dn:false,tm:null},{n:"Tatsapon J.",pk:"10 Class Pack (3 left)",dn:false,tm:null}];
-var PK=[{n:"Trial 3 Classes",p:"฿990",tp:"Credits",d:"3 classes · Valid 30 days"},{n:"10 Class Pack",p:"฿4,500",tp:"Credits",d:"10 classes · Valid 90 days"},{n:"20 Class Pack",p:"฿7,900",tp:"Credits",d:"20 classes · Valid 120 days"},{n:"30 Class Pack",p:"฿10,500",tp:"Credits",d:"30 classes · Valid 150 days"},{n:"Monthly Unlimited",p:"฿5,900",tp:"Unlimited",d:"Unlimited classes · 30 days"},{n:"Annual Pass",p:"฿49,900",tp:"Unlimited",d:"Unlimited classes · 365 days"}];
-var CRS=[{n:"Teacher Training",d:"2 days · 16 hours",p:"฿8,900"},{n:"Aerial Fundamentals Workshop",d:"5 days · 20 hours",p:"฿12,900"}];
+var PK=[{n:"Trial 3 Classes",p:"à¸¿990",tp:"Credits",d:"3 classes Â· Valid 30 days"},{n:"10 Class Pack",p:"à¸¿4,500",tp:"Credits",d:"10 classes Â· Valid 90 days"},{n:"20 Class Pack",p:"à¸¿7,900",tp:"Credits",d:"20 classes Â· Valid 120 days"},{n:"30 Class Pack",p:"à¸¿10,500",tp:"Credits",d:"30 classes Â· Valid 150 days"},{n:"Monthly Unlimited",p:"à¸¿5,900",tp:"Unlimited",d:"Unlimited classes Â· 30 days"},{n:"Annual Pass",p:"à¸¿49,900",tp:"Unlimited",d:"Unlimited classes Â· 365 days"}];
+var CRS=[{n:"Teacher Training",d:"2 days Â· 16 hours",p:"à¸¿8,900"},{n:"Aerial Fundamentals Workshop",d:"5 days Â· 20 hours",p:"à¸¿12,900"}];
 var RMS=[{n:"Wall Bar 1",ca:6,loc:"CIRCUS",st:"Available"},{n:"Pilates Room",ca:10,loc:"CIRCUS",st:"Available"},{n:"GYM 1 Sling Motor",ca:10,loc:"CIRCUS",st:"In Use"},{n:"PSL LOGO Room 2",ca:6,loc:"CIRCUS",st:"Available"},{n:"Studio A",ca:8,loc:"SILOM",st:"Available"},{n:"Studio B",ca:12,loc:"SILOM",st:"Available"},{n:"Trapeze Rig",ca:4,loc:"SILOM",st:"In Use"},{n:"Yoga Studio",ca:15,loc:"SILOM",st:"Available"}];
 var STAFF=[{n:"Joh",r:"Founder/Instructor",e:"joh@hoyhon.com",c:3},{n:"Nassanun",r:"Senior Instructor",e:"nassanun@hoyhon.com",c:4},{n:"Atom",r:"Instructor",e:"atom@hoyhon.com",c:5},{n:"Pitch",r:"Instructor",e:"pitch@hoyhon.com",c:2},{n:"Yak",r:"Instructor",e:"yak@hoyhon.com",c:6},{n:"Pom",r:"Instructor",e:"pom@hoyhon.com",c:3},{n:"Art",r:"Instructor",e:"art@hoyhon.com",c:4},{n:"Donut",r:"Instructor",e:"donut@hoyhon.com",c:2},{n:"Succo",r:"Instructor",e:"succo@hoyhon.com",c:3},{n:"Kao",r:"Instructor",e:"kao@hoyhon.com",c:1},{n:"Mint",r:"Instructor",e:"mint@hoyhon.com",c:2}];
 var SC=[{n:"Body Lab",cat:"Pilates",dur:"60 min",cap:6,lvl:"Beginner"},{n:"Stretch RCA",cat:"Flexibility",dur:"45 min",cap:6,lvl:"Beginner"},{n:"Hammock RCA",cat:"Aerial",dur:"60 min",cap:10,lvl:"All"},{n:"Hoop RCA",cat:"Aerial",dur:"60 min",cap:10,lvl:"Intermediate"},{n:"Pilates Burn",cat:"Pilates",dur:"50 min",cap:10,lvl:"All"},{n:"Silk RCA",cat:"Aerial",dur:"60 min",cap:10,lvl:"Intermediate"},{n:"Handstand",cat:"Acro",dur:"90 min",cap:8,lvl:"Advanced"},{n:"Pole Spinning",cat:"Pole",dur:"60 min",cap:8,lvl:"Beginner"},{n:"Cube",cat:"Acro",dur:"45 min",cap:6,lvl:"Beginner"},{n:"Strap",cat:"Aerial",dur:"60 min",cap:10,lvl:"Intermediate"},{n:"Trapeze",cat:"Aerial",dur:"60 min",cap:10,lvl:"All"},{n:"Pilates",cat:"Pilates",dur:"55 min",cap:6,lvl:"All"},{n:"Barre",cat:"Fitness",dur:"50 min",cap:8,lvl:"Beginner"},{n:"Pole",cat:"Pole",dur:"60 min",cap:8,lvl:"All"},{n:"Yoga Flow",cat:"Yoga",dur:"60 min",cap:15,lvl:"All"},{n:"Aerials 101",cat:"Aerial",dur:"90 min",cap:6,lvl:"Beginner"}];
@@ -983,10 +983,10 @@ function renderClassesTable(){
     h+='<td style="font-weight:600;cursor:pointer">'+s.n+'</td>';
     h+='<td>'+s.te+'</td>';
     h+='<td style="text-align:center"><input type="checkbox"></td>';
-    h+='<td>—</td>';
+    h+='<td>â</td>';
     h+='<td>'+s.r.split('(')[0].trim()+'</td>';
     h+='<td>'+s.r+'</td>';
-    h+='<td style="text-align:center"><button class="btn btn-s" onclick="showToast(\'Edit class options\', \'info\')">⋮</button></td>';
+    h+='<td style="text-align:center"><button class="btn btn-s" onclick="showToast(\'Edit class options\', \'info\')">â®</button></td>';
     h+='</tr>';
   });
   var _el=document.getElementById('classesBody');if(_el)_el.innerHTML=h;
@@ -1007,7 +1007,7 @@ rC(CL);
 function fC(){var q=document.getElementById('cS').value.toLowerCase();rC(q?CL.filter(function(c){return c.n.toLowerCase().indexOf(q)>=0||c.e.toLowerCase().indexOf(q)>=0}):CL)}
 
 // CHECK IN
-function rCI(){var h='';CI.forEach(function(c,i){h+='<div class="cir'+(c.dn?' dn':'')+'"><div class="cr"><div class="ca" style="'+(c.dn?'background:var(--green-bg);color:var(--green)':'')+'">'+( c.dn?'✓':ini(c.n))+'</div><div><div style="font-weight:600;font-size:13px">'+c.n+'</div><div style="font-size:12px;color:var(--muted)">'+c.pk+'</div></div></div>';if(c.dn){h+='<span class="cb">✓ '+c.tm+'</span>'}else{h+='<div style="display:flex;gap:6px"><button class="bc" onclick="dCI('+i+')">Check In</button><button class="bx">✕</button></div>'}h+='</div>'});var _el=document.getElementById('ciK');if(_el)_el.innerHTML=h;var _el2=document.getElementById('ciC');if(_el2)_el2.textContent=CI.filter(function(c){return c.dn}).length}
+function rCI(){var h='';CI.forEach(function(c,i){h+='<div class="cir'+(c.dn?' dn':'')+'"><div class="cr"><div class="ca" style="'+(c.dn?'background:var(--green-bg);color:var(--green)':'')+'">'+( c.dn?'â':ini(c.n))+'</div><div><div style="font-weight:600;font-size:13px">'+c.n+'</div><div style="font-size:12px;color:var(--muted)">'+c.pk+'</div></div></div>';if(c.dn){h+='<span class="cb">â '+c.tm+'</span>'}else{h+='<div style="display:flex;gap:6px"><button class="bc" onclick="dCI('+i+')">Check In</button><button class="bx">â</button></div>'}h+='</div>'});var _el=document.getElementById('ciK');if(_el)_el.innerHTML=h;var _el2=document.getElementById('ciC');if(_el2)_el2.textContent=CI.filter(function(c){return c.dn}).length}
 rCI();
 
 function dCI(i){
@@ -1049,31 +1049,31 @@ function goToClientsPage(name){goToPage('clients');document.getElementById('cS')
 
 // ===== AI ASSISTANT =====
 var aiKB={
-  'จองคลาส':['วิธีจองคลาส:','1. ไปที่หน้า Classes ในเมนูซ้าย','2. ดูตารางคลาสรายสัปดาห์','3. คลิกที่คลาสที่ต้องการ','4. กด "Book Now" เพื่อจอง','5. เลือกแพ็คเกจที่จะใช้ตัดครั้ง','6. ยืนยันการจอง — จะได้รับแจ้งเตือนทาง LINE'].join('\n'),
-  'เช็คอิน':['วิธีเช็คอินลูกค้า:','1. ไปที่หน้า Check In','2. เลือกคลาสปัจจุบัน','3. ดูรายชื่อลูกค้าที่จอง','4. กดปุ่ม "Check In" สีเขียวข้างชื่อลูกค้า','5. ระบบจะบันทึกเวลาเช็คอินอัตโนมัติ','หรือใช้ QR Code Scan ได้เลย'].join('\n'),
-  'แพ็คเกจ':['แพ็คเกจที่มี:','• Trial 3 Classes — ฿990 (30 วัน)','• 10 Class Pack — ฿4,500 (90 วัน)','• 20 Class Pack — ฿7,900 (120 วัน)','• 30 Class Pack — ฿10,500 (150 วัน)','• Monthly Unlimited — ฿5,900/เดือน','• Annual Pass — ฿49,900/ปี','','ดูเพิ่มเติมที่ Services & Products → Pricing'].join('\n'),
-  'เพิ่มลูกค้า':['วิธีเพิ่มลูกค้าใหม่:','1. ไปที่หน้า Clients','2. กดปุ่ม "+ Add Client"','3. กรอกข้อมูล: ชื่อ, อีเมล, เบอร์โทร','4. เลือก Tags (VIP, New, Lead ฯลฯ)','5. กด Save — ลูกค้าจะปรากฏในระบบ'].join('\n'),
-  'ยอดขาย':['วิธีดูยอดขาย:','1. หน้า Dashboard แสดง KPIs หลัก','  • Total Net Sales: 414,573 BHT','  • Total Visits: 730','  • Active Members: 156','2. ดูเพิ่มเติมที่ Insights → Analytics','3. มี 12 dashboards: Overview, Sales, Visits, Memberships, Classes, Payments ฯลฯ'].join('\n'),
-  'เพิ่มคลาส':['วิธีเพิ่มคลาสใหม่:','1. ไปที่หน้า Classes','2. กดปุ่ม "+ Add Class"','3. เลือก: ประเภทคลาส, วัน-เวลา, ครูผู้สอน, ห้อง, จำนวนที่นั่ง','4. กด Save','','จัดการประเภทคลาสที่ Services & Products → Classes (มี 16 ประเภท)'].join('\n'),
-  'ยกเลิก':['วิธียกเลิกการจอง:','1. ไปที่หน้า Clients','2. คลิกชื่อลูกค้า','3. เลือกการจองที่ต้องการยกเลิก','4. กดปุ่ม "Cancel Booking"','5. ระบบจะคืน credit กลับให้'].join('\n'),
-  'ตารางสอน':['ดูตารางสอน:','1. ไปที่หน้า Classes','2. เลือกระยะเวลา: Day / Week / Month','3. กดปุ่ม ‹ › เพื่อเปลี่ยนสัปดาห์','4. กรองตามสาขา, ประเภท, ครูผู้สอน','5. ดูตารางคลาสเต็มไปทั้งหมด'].join('\n'),
-  'ห้อง':['ข้อมูลห้องเรียน (8 ห้อง):','HOYHON CIRCUS (RCA):','• Wall Bar 1 (6 คน), Pilates Room (10 คน)','• GYM 1 Sling Motor (10 คน), PSL LOGO Room 2 (6 คน)','HOYHON Park (Silom):','• Studio A (8 คน), Studio B (12 คน)','• Trapeze Rig (4 คน), Yoga Studio (15 คน)'].join('\n'),
-  'default':'สวัสดีค่ะ! ฉันคือ HOYHON AI Assistant 🤖\n\nฉันช่วยตอบคำถามเกี่ยวกับการใช้งานระบบได้ เช่น:\n• วิธีจองคลาส, เช็คอิน, ดูแพ็คเกจ\n• เพิ่มลูกค้า, ดูยอดขาย\n• เพิ่มคลาส, ดูตารางสอน\n• ข้อมูลครู, ห้องเรียน\n\nลองถามได้เลยค่ะ!'
+  'à¸à¸­à¸à¸à¸¥à¸²à¸ª':['à¸§à¸´à¸à¸µà¸à¸­à¸à¸à¸¥à¸²à¸ª:','1. à¹à¸à¸à¸µà¹à¸«à¸à¹à¸² Classes à¹à¸à¹à¸¡à¸à¸¹à¸à¹à¸²à¸¢','2. à¸à¸¹à¸à¸²à¸£à¸²à¸à¸à¸¥à¸²à¸ªà¸£à¸²à¸¢à¸ªà¸±à¸à¸à¸²à¸«à¹','3. à¸à¸¥à¸´à¸à¸à¸µà¹à¸à¸¥à¸²à¸ªà¸à¸µà¹à¸à¹à¸­à¸à¸à¸²à¸£','4. à¸à¸ "Book Now" à¹à¸à¸·à¹à¸­à¸à¸­à¸','5. à¹à¸¥à¸·à¸­à¸à¹à¸à¹à¸à¹à¸à¸à¸à¸µà¹à¸à¸°à¹à¸à¹à¸à¸±à¸à¸à¸£à¸±à¹à¸','6. à¸¢à¸·à¸à¸¢à¸±à¸à¸à¸²à¸£à¸à¸­à¸ â à¸à¸°à¹à¸à¹à¸£à¸±à¸à¹à¸à¹à¸à¹à¸à¸·à¸­à¸à¸à¸²à¸ LINE'].join('\n'),
+  'à¹à¸à¹à¸à¸­à¸´à¸':['à¸§à¸´à¸à¸µà¹à¸à¹à¸à¸­à¸´à¸à¸¥à¸¹à¸à¸à¹à¸²:','1. à¹à¸à¸à¸µà¹à¸«à¸à¹à¸² Check In','2. à¹à¸¥à¸·à¸­à¸à¸à¸¥à¸²à¸ªà¸à¸±à¸à¸à¸¸à¸à¸±à¸','3. à¸à¸¹à¸£à¸²à¸¢à¸à¸·à¹à¸­à¸¥à¸¹à¸à¸à¹à¸²à¸à¸µà¹à¸à¸­à¸','4. à¸à¸à¸à¸¸à¹à¸¡ "Check In" à¸ªà¸µà¹à¸à¸µà¸¢à¸§à¸à¹à¸²à¸à¸à¸·à¹à¸­à¸¥à¸¹à¸à¸à¹à¸²','5. à¸£à¸°à¸à¸à¸à¸°à¸à¸±à¸à¸à¸¶à¸à¹à¸§à¸¥à¸²à¹à¸à¹à¸à¸­à¸´à¸à¸­à¸±à¸à¹à¸à¸¡à¸±à¸à¸´','à¸«à¸£à¸·à¸­à¹à¸à¹ QR Code Scan à¹à¸à¹à¹à¸¥à¸¢'].join('\n'),
+  'à¹à¸à¹à¸à¹à¸à¸':['à¹à¸à¹à¸à¹à¸à¸à¸à¸µà¹à¸¡à¸µ:','â¢ Trial 3 Classes â à¸¿990 (30 à¸§à¸±à¸)','â¢ 10 Class Pack â à¸¿4,500 (90 à¸§à¸±à¸)','â¢ 20 Class Pack â à¸¿7,900 (120 à¸§à¸±à¸)','â¢ 30 Class Pack â à¸¿10,500 (150 à¸§à¸±à¸)','â¢ Monthly Unlimited â à¸¿5,900/à¹à¸à¸·à¸­à¸','â¢ Annual Pass â à¸¿49,900/à¸à¸µ','','à¸à¸¹à¹à¸à¸´à¹à¸¡à¹à¸à¸´à¸¡à¸à¸µà¹ Services & Products â Pricing'].join('\n'),
+  'à¹à¸à¸´à¹à¸¡à¸¥à¸¹à¸à¸à¹à¸²':['à¸§à¸´à¸à¸µà¹à¸à¸´à¹à¸¡à¸¥à¸¹à¸à¸à¹à¸²à¹à¸«à¸¡à¹:','1. à¹à¸à¸à¸µà¹à¸«à¸à¹à¸² Clients','2. à¸à¸à¸à¸¸à¹à¸¡ "+ Add Client"','3. à¸à¸£à¸­à¸à¸à¹à¸­à¸¡à¸¹à¸¥: à¸à¸·à¹à¸­, à¸­à¸µà¹à¸¡à¸¥, à¹à¸à¸­à¸£à¹à¹à¸à¸£','4. à¹à¸¥à¸·à¸­à¸ Tags (VIP, New, Lead à¸¯à¸¥à¸¯)','5. à¸à¸ Save â à¸¥à¸¹à¸à¸à¹à¸²à¸à¸°à¸à¸£à¸²à¸à¸à¹à¸à¸£à¸°à¸à¸'].join('\n'),
+  'à¸¢à¸­à¸à¸à¸²à¸¢':['à¸§à¸´à¸à¸µà¸à¸¹à¸¢à¸­à¸à¸à¸²à¸¢:','1. à¸«à¸à¹à¸² Dashboard à¹à¸ªà¸à¸ KPIs à¸«à¸¥à¸±à¸','  â¢ Total Net Sales: 414,573 BHT','  â¢ Total Visits: 730','  â¢ Active Members: 156','2. à¸à¸¹à¹à¸à¸´à¹à¸¡à¹à¸à¸´à¸¡à¸à¸µà¹ Insights â Analytics','3. à¸¡à¸µ 12 dashboards: Overview, Sales, Visits, Memberships, Classes, Payments à¸¯à¸¥à¸¯'].join('\n'),
+  'à¹à¸à¸´à¹à¸¡à¸à¸¥à¸²à¸ª':['à¸§à¸´à¸à¸µà¹à¸à¸´à¹à¸¡à¸à¸¥à¸²à¸ªà¹à¸«à¸¡à¹:','1. à¹à¸à¸à¸µà¹à¸«à¸à¹à¸² Classes','2. à¸à¸à¸à¸¸à¹à¸¡ "+ Add Class"','3. à¹à¸¥à¸·à¸­à¸: à¸à¸£à¸°à¹à¸ à¸à¸à¸¥à¸²à¸ª, à¸§à¸±à¸-à¹à¸§à¸¥à¸², à¸à¸£à¸¹à¸à¸¹à¹à¸ªà¸­à¸, à¸«à¹à¸­à¸, à¸à¸³à¸à¸§à¸à¸à¸µà¹à¸à¸±à¹à¸','4. à¸à¸ Save','','à¸à¸±à¸à¸à¸²à¸£à¸à¸£à¸°à¹à¸ à¸à¸à¸¥à¸²à¸ªà¸à¸µà¹ Services & Products â Classes (à¸¡à¸µ 16 à¸à¸£à¸°à¹à¸ à¸)'].join('\n'),
+  'à¸¢à¸à¹à¸¥à¸´à¸':['à¸§à¸´à¸à¸µà¸¢à¸à¹à¸¥à¸´à¸à¸à¸²à¸£à¸à¸­à¸:','1. à¹à¸à¸à¸µà¹à¸«à¸à¹à¸² Clients','2. à¸à¸¥à¸´à¸à¸à¸·à¹à¸­à¸¥à¸¹à¸à¸à¹à¸²','3. à¹à¸¥à¸·à¸­à¸à¸à¸²à¸£à¸à¸­à¸à¸à¸µà¹à¸à¹à¸­à¸à¸à¸²à¸£à¸¢à¸à¹à¸¥à¸´à¸','4. à¸à¸à¸à¸¸à¹à¸¡ "Cancel Booking"','5. à¸£à¸°à¸à¸à¸à¸°à¸à¸·à¸ credit à¸à¸¥à¸±à¸à¹à¸«à¹'].join('\n'),
+  'à¸à¸²à¸£à¸²à¸à¸ªà¸­à¸':['à¸à¸¹à¸à¸²à¸£à¸²à¸à¸ªà¸­à¸:','1. à¹à¸à¸à¸µà¹à¸«à¸à¹à¸² Classes','2. à¹à¸¥à¸·à¸­à¸à¸£à¸°à¸¢à¸°à¹à¸§à¸¥à¸²: Day / Week / Month','3. à¸à¸à¸à¸¸à¹à¸¡ â¹ âº à¹à¸à¸·à¹à¸­à¹à¸à¸¥à¸µà¹à¸¢à¸à¸ªà¸±à¸à¸à¸²à¸«à¹','4. à¸à¸£à¸­à¸à¸à¸²à¸¡à¸ªà¸²à¸à¸², à¸à¸£à¸°à¹à¸ à¸, à¸à¸£à¸¹à¸à¸¹à¹à¸ªà¸­à¸','5. à¸à¸¹à¸à¸²à¸£à¸²à¸à¸à¸¥à¸²à¸ªà¹à¸à¹à¸¡à¹à¸à¸à¸±à¹à¸à¸«à¸¡à¸'].join('\n'),
+  'à¸«à¹à¸­à¸':['à¸à¹à¸­à¸¡à¸¹à¸¥à¸«à¹à¸­à¸à¹à¸£à¸µà¸¢à¸ (8 à¸«à¹à¸­à¸):','HOYHON CIRCUS (RCA):','â¢ Wall Bar 1 (6 à¸à¸), Pilates Room (10 à¸à¸)','â¢ GYM 1 Sling Motor (10 à¸à¸), PSL LOGO Room 2 (6 à¸à¸)','HOYHON Park (Silom):','â¢ Studio A (8 à¸à¸), Studio B (12 à¸à¸)','â¢ Trapeze Rig (4 à¸à¸), Yoga Studio (15 à¸à¸)'].join('\n'),
+  'default':'à¸ªà¸§à¸±à¸ªà¸à¸µà¸à¹à¸°! à¸à¸±à¸à¸à¸·à¸­ HOYHON AI Assistant ð¤\n\nà¸à¸±à¸à¸à¹à¸§à¸¢à¸à¸­à¸à¸à¸³à¸à¸²à¸¡à¹à¸à¸µà¹à¸¢à¸§à¸à¸±à¸à¸à¸²à¸£à¹à¸à¹à¸à¸²à¸à¸£à¸°à¸à¸à¹à¸à¹ à¹à¸à¹à¸:\nâ¢ à¸§à¸´à¸à¸µà¸à¸­à¸à¸à¸¥à¸²à¸ª, à¹à¸à¹à¸à¸­à¸´à¸, à¸à¸¹à¹à¸à¹à¸à¹à¸à¸\nâ¢ à¹à¸à¸´à¹à¸¡à¸¥à¸¹à¸à¸à¹à¸², à¸à¸¹à¸¢à¸­à¸à¸à¸²à¸¢\nâ¢ à¹à¸à¸´à¹à¸¡à¸à¸¥à¸²à¸ª, à¸à¸¹à¸à¸²à¸£à¸²à¸à¸ªà¸­à¸\nâ¢ à¸à¹à¸­à¸¡à¸¹à¸¥à¸à¸£à¸¹, à¸«à¹à¸­à¸à¹à¸£à¸µà¸¢à¸\n\nà¸¥à¸­à¸à¸à¸²à¸¡à¹à¸à¹à¹à¸¥à¸¢à¸à¹à¸°!'
 };
 
 function aiAnswer(q){
   q=q.toLowerCase();
-  if(q.indexOf('จอง')>=0||q.indexOf('book')>=0) return aiKB['จองคลาส'];
-  if(q.indexOf('เช็คอิน')>=0||q.indexOf('check')>=0) return aiKB['เช็คอิน'];
-  if(q.indexOf('แพ็ค')>=0||q.indexOf('ราคา')>=0||q.indexOf('package')>=0||q.indexOf('price')>=0) return aiKB['แพ็คเกจ'];
-  if(q.indexOf('เพิ่มลูกค้า')>=0||q.indexOf('add client')>=0||q.indexOf('สมัคร')>=0) return aiKB['เพิ่มลูกค้า'];
-  if(q.indexOf('ยอดขาย')>=0||q.indexOf('sale')>=0||q.indexOf('revenue')>=0||q.indexOf('analytics')>=0||q.indexOf('รายได้')>=0) return aiKB['ยอดขาย'];
-  if(q.indexOf('เพิ่มคลาส')>=0||q.indexOf('add class')>=0||q.indexOf('สร้างคลาส')>=0) return aiKB['เพิ่มคลาส'];
-  if(q.indexOf('ยกเลิก')>=0||q.indexOf('cancel')>=0||q.indexOf('refund')>=0) return aiKB['ยกเลิก'];
-  if(q.indexOf('ตารางสอน')>=0||q.indexOf('schedule')>=0||q.indexOf('view schedule')>=0) return aiKB['ตารางสอน'];
-  if(q.indexOf('ห้อง')>=0||q.indexOf('room')>=0) return aiKB['ห้อง'];
-  if(q.indexOf('hello')>=0||q.indexOf('สวัสดี')>=0||q.indexOf('hi')>=0) return aiKB['default'];
-  return 'ขอโทษค่ะ ฉันยังไม่เข้าใจคำถามนี้ 😅\n\nลองถามเกี่ยวกับ:\n• จองคลาส, เช็คอิน, แพ็คเกจ\n• เพิ่มลูกค้า, ดูยอดขาย\n• ข้อมูลครู, ห้องเรียน\n\nหรือกดปุ่มด่วนด้านล่างได้เลยค่ะ!';
+  if(q.indexOf('à¸à¸­à¸')>=0||q.indexOf('book')>=0) return aiKB['à¸à¸­à¸à¸à¸¥à¸²à¸ª'];
+  if(q.indexOf('à¹à¸à¹à¸à¸­à¸´à¸')>=0||q.indexOf('check')>=0) return aiKB['à¹à¸à¹à¸à¸­à¸´à¸'];
+  if(q.indexOf('à¹à¸à¹à¸')>=0||q.indexOf('à¸£à¸²à¸à¸²')>=0||q.indexOf('package')>=0||q.indexOf('price')>=0) return aiKB['à¹à¸à¹à¸à¹à¸à¸'];
+  if(q.indexOf('à¹à¸à¸´à¹à¸¡à¸¥à¸¹à¸à¸à¹à¸²')>=0||q.indexOf('add client')>=0||q.indexOf('à¸ªà¸¡à¸±à¸à¸£')>=0) return aiKB['à¹à¸à¸´à¹à¸¡à¸¥à¸¹à¸à¸à¹à¸²'];
+  if(q.indexOf('à¸¢à¸­à¸à¸à¸²à¸¢')>=0||q.indexOf('sale')>=0||q.indexOf('revenue')>=0||q.indexOf('analytics')>=0||q.indexOf('à¸£à¸²à¸¢à¹à¸à¹')>=0) return aiKB['à¸¢à¸­à¸à¸à¸²à¸¢'];
+  if(q.indexOf('à¹à¸à¸´à¹à¸¡à¸à¸¥à¸²à¸ª')>=0||q.indexOf('add class')>=0||q.indexOf('à¸ªà¸£à¹à¸²à¸à¸à¸¥à¸²à¸ª')>=0) return aiKB['à¹à¸à¸´à¹à¸¡à¸à¸¥à¸²à¸ª'];
+  if(q.indexOf('à¸¢à¸à¹à¸¥à¸´à¸')>=0||q.indexOf('cancel')>=0||q.indexOf('refund')>=0) return aiKB['à¸¢à¸à¹à¸¥à¸´à¸'];
+  if(q.indexOf('à¸à¸²à¸£à¸²à¸à¸ªà¸­à¸')>=0||q.indexOf('schedule')>=0||q.indexOf('view schedule')>=0) return aiKB['à¸à¸²à¸£à¸²à¸à¸ªà¸­à¸'];
+  if(q.indexOf('à¸«à¹à¸­à¸')>=0||q.indexOf('room')>=0) return aiKB['à¸«à¹à¸­à¸'];
+  if(q.indexOf('hello')>=0||q.indexOf('à¸ªà¸§à¸±à¸ªà¸à¸µ')>=0||q.indexOf('hi')>=0) return aiKB['default'];
+  return 'à¸à¸­à¹à¸à¸©à¸à¹à¸° à¸à¸±à¸à¸¢à¸±à¸à¹à¸¡à¹à¹à¸à¹à¸²à¹à¸à¸à¸³à¸à¸²à¸¡à¸à¸µà¹ ð\n\nà¸¥à¸­à¸à¸à¸²à¸¡à¹à¸à¸µà¹à¸¢à¸§à¸à¸±à¸:\nâ¢ à¸à¸­à¸à¸à¸¥à¸²à¸ª, à¹à¸à¹à¸à¸­à¸´à¸, à¹à¸à¹à¸à¹à¸à¸\nâ¢ à¹à¸à¸´à¹à¸¡à¸¥à¸¹à¸à¸à¹à¸², à¸à¸¹à¸¢à¸­à¸à¸à¸²à¸¢\nâ¢ à¸à¹à¸­à¸¡à¸¹à¸¥à¸à¸£à¸¹, à¸«à¹à¸­à¸à¹à¸£à¸µà¸¢à¸\n\nà¸«à¸£à¸·à¸­à¸à¸à¸à¸¸à¹à¸¡à¸à¹à¸§à¸à¸à¹à¸²à¸à¸¥à¹à¸²à¸à¹à¸à¹à¹à¸¥à¸¢à¸à¹à¸°!';
 }
 
 function toggleAI(){document.getElementById('aiP').classList.toggle('show')}
@@ -1112,7 +1112,7 @@ async function saveClass(){
   var capacity = parseInt(document.getElementById('classCapacity').value);
 
   if(!typeName || !classDate || !startTime || !endTime){
-    showToast('กรุณากรอกข้อมูลให้ครบ', 'error');
+    showToast('à¸à¸£à¸¸à¸à¸²à¸à¸£à¸­à¸à¸à¹à¸­à¸¡à¸¹à¸¥à¹à¸«à¹à¸à¸£à¸', 'error');
     return;
   }
 
@@ -1139,17 +1139,17 @@ async function saveClass(){
 
       var {data, error} = await sb.from('classes').insert(classData).select().single();
       if(error) throw error;
-      showToast('เพิ่มคลาส ' + typeName + ' สำเร็จ!', 'success');
+      showToast('à¹à¸à¸´à¹à¸¡à¸à¸¥à¸²à¸ª ' + typeName + ' à¸ªà¸³à¹à¸£à¹à¸!', 'success');
       closeAddClassModal();
       document.getElementById('classDate').value = '';
       document.getElementById('classStartTime').value = '';
       document.getElementById('classEndTime').value = '';
       document.getElementById('classCapacity').value = '10';
     } catch(e) {
-      showToast('Error: ' + (e.message || 'ไม่สามารถเพิ่มคลาสได้'), 'error');
+      showToast('Error: ' + (e.message || 'à¹à¸¡à¹à¸ªà¸²à¸¡à¸²à¸£à¸à¹à¸à¸´à¹à¸¡à¸à¸¥à¸²à¸ªà¹à¸à¹'), 'error');
     }
   } else {
-    showToast('เพิ่มคลาสสำเร็จ! (Demo mode)', 'success');
+    showToast('à¹à¸à¸´à¹à¸¡à¸à¸¥à¸²à¸ªà¸ªà¸³à¹à¸£à¹à¸! (Demo mode)', 'success');
     closeAddClassModal();
   }
 }
@@ -1171,8 +1171,8 @@ async function saveClient(){
   if(document.getElementById('tag-regular').checked)tags.push('Regular');
   if(tags.length===0)tags.push('Regular');
 
-  var email = document.getElementById('clientEmail').value || '—';
-  var phone = document.getElementById('clientPhone').value || '—';
+  var email = document.getElementById('clientEmail').value || 'â';
+  var phone = document.getElementById('clientPhone').value || 'â';
   var lineId = document.getElementById('clientLineID').value || null;
   var pkg = document.getElementById('clientPackage').value;
   var notes = document.getElementById('clientNotes').value || null;
@@ -1186,7 +1186,7 @@ async function saveClient(){
     tg: tags,
     notes: notes,
     v: 0,
-    l: '—'
+    l: 'â'
   };
 
   if(dbMode){
@@ -1204,7 +1204,7 @@ async function saveClient(){
       document.getElementById('tag-new').checked=false;
       document.getElementById('tag-lead').checked=false;
       document.getElementById('tag-regular').checked=false;
-      document.getElementById('clientPackage').value='—';
+      document.getElementById('clientPackage').value='â';
       document.getElementById('clientNotes').value='';
     } else {
       showToast('Error adding client. Please try again.', 'error');
@@ -1222,7 +1222,7 @@ async function saveClient(){
     document.getElementById('tag-new').checked=false;
     document.getElementById('tag-lead').checked=false;
     document.getElementById('tag-regular').checked=false;
-    document.getElementById('clientPackage').value='—';
+    document.getElementById('clientPackage').value='â';
     document.getElementById('clientNotes').value='';
   }
 }
@@ -1235,21 +1235,21 @@ document.getElementById('addClientModal').onclick=function(e){if(e.target===this
 </script>
 
 <!-- AI ASSISTANT WIDGET -->
-<button class="ai-btn" onclick="toggleAI()" title="AI Assistant">💬</button>
+<button class="ai-btn" onclick="toggleAI()" title="AI Assistant">ð¬</button>
 <div class="ai-panel" id="aiP">
-  <div class="ai-head"><h3>🤖 HOYHON AI Assistant</h3><button class="ai-close" onclick="toggleAI()">×</button></div>
+  <div class="ai-head"><h3>ð¤ HOYHON AI Assistant</h3><button class="ai-close" onclick="toggleAI()">Ã</button></div>
   <div class="ai-body" id="aiBody">
-    <div class="ai-msg bot">สวัสดีค่ะ! ฉันคือ HOYHON AI Assistant 🤖<br><br>ถามเกี่ยวกับการใช้งานระบบได้เลยค่ะ เช่น วิธีจองคลาส, เช็คอิน, ดูยอดขาย หรือจัดการสมาชิก</div>
+    <div class="ai-msg bot">à¸ªà¸§à¸±à¸ªà¸à¸µà¸à¹à¸°! à¸à¸±à¸à¸à¸·à¸­ HOYHON AI Assistant ð¤<br><br>à¸à¸²à¸¡à¹à¸à¸µà¹à¸¢à¸§à¸à¸±à¸à¸à¸²à¸£à¹à¸à¹à¸à¸²à¸à¸£à¸°à¸à¸à¹à¸à¹à¹à¸¥à¸¢à¸à¹à¸° à¹à¸à¹à¸ à¸§à¸´à¸à¸µà¸à¸­à¸à¸à¸¥à¸²à¸ª, à¹à¸à¹à¸à¸­à¸´à¸, à¸à¸¹à¸¢à¸­à¸à¸à¸²à¸¢ à¸«à¸£à¸·à¸­à¸à¸±à¸à¸à¸²à¸£à¸ªà¸¡à¸²à¸à¸´à¸</div>
   </div>
   <div class="ai-quick">
-    <button onclick="quickAI('วิธีจองคลาส')">จองคลาส</button>
-    <button onclick="quickAI('วิธีเช็คอิน')">เช็คอิน</button>
-    <button onclick="quickAI('ดูแพ็คเกจ')">แพ็คเกจ</button>
-    <button onclick="quickAI('เพิ่มลูกค้าใหม่')">เพิ่มลูกค้า</button>
-    <button onclick="quickAI('ดูยอดขาย')">ยอดขาย</button>
-    <button onclick="quickAI('ตารางสอน')">ตารางสอน</button>
+    <button onclick="quickAI('à¸§à¸´à¸à¸µà¸à¸­à¸à¸à¸¥à¸²à¸ª')">à¸à¸­à¸à¸à¸¥à¸²à¸ª</button>
+    <button onclick="quickAI('à¸§à¸´à¸à¸µà¹à¸à¹à¸à¸­à¸´à¸')">à¹à¸à¹à¸à¸­à¸´à¸</button>
+    <button onclick="quickAI('à¸à¸¹à¹à¸à¹à¸à¹à¸à¸')">à¹à¸à¹à¸à¹à¸à¸</button>
+    <button onclick="quickAI('à¹à¸à¸´à¹à¸¡à¸¥à¸¹à¸à¸à¹à¸²à¹à¸«à¸¡à¹')">à¹à¸à¸´à¹à¸¡à¸¥à¸¹à¸à¸à¹à¸²</button>
+    <button onclick="quickAI('à¸à¸¹à¸¢à¸­à¸à¸à¸²à¸¢')">à¸¢à¸­à¸à¸à¸²à¸¢</button>
+    <button onclick="quickAI('à¸à¸²à¸£à¸²à¸à¸ªà¸­à¸')">à¸à¸²à¸£à¸²à¸à¸ªà¸­à¸</button>
   </div>
-  <div class="ai-input"><input id="aiInp" placeholder="ถามอะไรก็ได้..."><button onclick="sendAI()">ส่ง</button></div>
+  <div class="ai-input"><input id="aiInp" placeholder="à¸à¸²à¸¡à¸­à¸°à¹à¸£à¸à¹à¹à¸à¹..."><button onclick="sendAI()">à¸ªà¹à¸</button></div>
 </div>
 
 </body>
